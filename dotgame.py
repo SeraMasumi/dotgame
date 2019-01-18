@@ -10,11 +10,14 @@ screen = pygame.display.set_mode((1024, 768))
 running = True
 
 while running:
-    # 监听键盘，按下ESC就退出
     for event in pygame.event.get():
+        # 监听键盘，按下ESC就退出
         if event.type == KEYDOWN:
             if(event.key == K_ESCAPE):
                 running = False
-    # 画点
+        # 点击关闭就退出
+        elif event.type == QUIT:
+            running = False
+    # 画点并更新屏幕
     pygame.draw.circle(screen, (255,255,255), (400, 300), 10, 0)
     pygame.display.update()
