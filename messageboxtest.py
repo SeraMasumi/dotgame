@@ -5,6 +5,8 @@ import pygame
 from pygame.locals import *
 from sys import exit
 
+import thread, time, random
+
 pygame.init()
 # Configuration file
 window_size = (1280, 750)
