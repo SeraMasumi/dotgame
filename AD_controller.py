@@ -3,6 +3,8 @@
 from fake_rpi.RPi import GPIO as GPIO
 import threading
 import queue
+import AD_reader
+
 
 class AD_controller(threading.Thread):
     def __init__(self, display_x_queue, display_y_queue, joystick_x_queue, joystick_y_queue):
@@ -16,6 +18,7 @@ class AD_controller(threading.Thread):
         self.display_y_queue = display_y_queue
         self.joystick_x_queue = joystick_x_queue
         self.joystick_y_queue = joystick_y_queue
+        self.AD_reader = AD_reader.AD_reader()
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.chan_list_out, GPIO.OUT)
@@ -49,15 +52,17 @@ class AD_controller(threading.Thread):
         GPIO.output(40, GPIO.LOW)
 
     def run(self):
+        self.AD_reader.run()
+
         # 主循环
         #   测x
         #   清零
         #   测y
         #   由电压比值计算xy坐标
-        TABLET_X_MIN = 000
-        TABLET_X_MAX = 000
-        TABLET_Y_MIN = 000
-        TABLET_Y_MAX = 000
+        TABLET_X_MIN = 1363000
+        TABLET_X_MAX = 4218000
+        TABLET_Y_MIN = 975000
+        TABLET_Y_MAX = 2322000
         input_x_value_tablet = 0
         input_y_value_tablet = 0
         input_x_value_joystick = 0
@@ -65,10 +70,10 @@ class AD_controller(threading.Thread):
         while True:
             # 测量平板xy
             AD_controller.measure_x()
-            input_x_value_tablet = 读AD
+            input_x_value_tablet = self.AD_reader.AD_tablet_value
             AD_controller.all_close()
             AD_controller.measure_y()
-            input_y_value_tablet = 读AD
+            input_y_value_tablet = self.AD_reader.AD_tablet_value
 
             # 计算要显示的xy坐标
             self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
@@ -78,8 +83,9 @@ class AD_controller(threading.Thread):
             self.display_y_queue.put(self.ratio_y)
 
             # 测量手柄xy
-            input_x_value_joystick = 读AD
-            input_y_value_joystick = 读AD
+            if((not self.joystick_x_queue.empty()) and (not self.joystick_y_queue.empty())):
+                input_x_value_joystick = self.joystick_x_queue.get()
+                input_y_value_joystick = self.joystick_y_queue.get()
 
             self.joystick_x_queue.put(input_x_value_joystick)
             self.joystick_y_queue.put(input_y_value_joystick)

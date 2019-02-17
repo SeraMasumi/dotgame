@@ -12,7 +12,7 @@ class Game_controller(threading.Thread):
         self.input_y = -1
 
     def display(self, x, y):
-        self.input_x = x # 传来的动点
+        self.input_x = x  # 传来的动点
         self.input_y = y
 
     def run(self):
@@ -96,7 +96,9 @@ class Game_controller(threading.Thread):
                     running = False
                 elif (not game_started) and event.type == MOUSEBUTTONDOWN:  # 点击开始就获取输入框的坐标并切换到坐标画面
                     x, y = pygame.mouse.get_pos()
-                    if start_game_click_box_x <= x <= (start_game_click_box_x + click_box_w) and start_game_click_box_y <= y <= (start_game_click_box_y + click_box_h):  # 如果点击在start_game_click_box之内
+                    if start_game_click_box_x <= x <= (
+                            start_game_click_box_x + click_box_w) and start_game_click_box_y <= y <= (
+                            start_game_click_box_y + click_box_h):  # 如果点击在start_game_click_box之内
                         game_started = True  # 启动游戏
                         pos_x1 = int(manager.widgets[0].get_text())  # 依次获取所有输入的坐标
                         pos_y1 = int(manager.widgets[1].get_text())
@@ -104,7 +106,9 @@ class Game_controller(threading.Thread):
                         pos_y2 = int(manager.widgets[3].get_text())
                         pos_x3 = int(manager.widgets[4].get_text())
                         pos_y3 = int(manager.widgets[5].get_text())
-                    if balanced_click_box_x <= x <= (balanced_click_box_x + click_box_w) and balanced_click_box_y <= y <= (balanced_click_box_y + click_box_h):
+                    if balanced_click_box_x <= x <= (
+                            balanced_click_box_x + click_box_w) and balanced_click_box_y <= y <= (
+                            balanced_click_box_y + click_box_h):
                         tablet_balanced = True
 
                 # 背景设置为黑色
@@ -115,7 +119,7 @@ class Game_controller(threading.Thread):
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x1, pos_y1), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x2, pos_y2), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x3, pos_y3), 10, 0)
-                if(self.input_x != -1 and self.input_y != -1):
+                if self.input_x != -1 and self.input_y != -1:
                     pygame.draw.circle(screen, (255, 255, 255), (self.input_x, self.input_y), 10, 0)
 
             elif tablet_balanced:  # 游戏还没开始，显示欢迎界面
@@ -131,7 +135,7 @@ class Game_controller(threading.Thread):
                 manager.draw(screen)
                 manager.update(events, dt)
 
-            else: # 请找平
+            else:  # 请找平
                 screen.blit(finish_balance_string, (balanced_click_box_x, balanced_click_box_y))
                 screen.blit(find_balance_string, (395, 235))
 
@@ -139,5 +143,6 @@ class Game_controller(threading.Thread):
             dt = clock.tick()
             pygame.display.update()
 
-runner = Game_controller();
-runner.run();
+
+runner = Game_controller()
+runner.run()
