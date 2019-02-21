@@ -144,5 +144,5 @@ class Game_controller(threading.Thread):
             pygame.display.update()
 
 
-runner = Game_controller()
-runner.run()
+# runner = Game_controller()
+# runner.run()

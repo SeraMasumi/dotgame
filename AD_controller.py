@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # import RPi.GPIO as GPIO
-from fake_rpi.RPi import GPIO as GPIO
 import threading
 import queue
 import AD_reader
+from fake_rpi.RPi import GPIO as GPIO
+from fake_rpi import toggle_print
+toggle_print(False)
 
 
 class AD_controller(threading.Thread):
@@ -69,23 +71,28 @@ class AD_controller(threading.Thread):
         input_y_value_joystick = 0
         while True:
             # 测量平板xy
-            AD_controller.measure_x()
+            AD_controller.measure_x(self)
             input_x_value_tablet = self.AD_reader.AD_tablet_value
-            AD_controller.all_close()
-            AD_controller.measure_y()
+            # print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+            AD_controller.all_close(self)
+            AD_controller.measure_y(self)
             input_y_value_tablet = self.AD_reader.AD_tablet_value
+            # print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
 
             # 计算要显示的xy坐标
             self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
             self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
 
             self.display_x_queue.put(self.ratio_x)
+            # print("in AD_controller, ratio_x put in queue. display ratio_x = ", self.ratio_x)
             self.display_y_queue.put(self.ratio_y)
+            # print("in AD_controller, ratio_y put in queue. display ratio_y = ", self.ratio_y)
 
             # 测量手柄xy
-            if((not self.joystick_x_queue.empty()) and (not self.joystick_y_queue.empty())):
-                input_x_value_joystick = self.joystick_x_queue.get()
-                input_y_value_joystick = self.joystick_y_queue.get()
-
-            self.joystick_x_queue.put(input_x_value_joystick)
-            self.joystick_y_queue.put(input_y_value_joystick)
+            if((not self.AD_reader.AD_joystick_x_queue.empty()) and (not self.AD_reader.AD_joystick_y_queue.empty())):
+                input_x_value_joystick = self.AD_reader.AD_joystick_x_queue.get()
+                input_y_value_joystick = self.AD_reader.AD_joystick_y_queue.get()
+                self.joystick_x_queue.put(input_x_value_joystick)
+                print("in AD_controller, input_x_value_joystick put in queue. display input_x_value_joystick = ", input_x_value_joystick)
+                self.joystick_y_queue.put(input_y_value_joystick)
+                print("in AD_controller, input_y_value_joystick put in queue. display input_y_value_joystick = ", input_y_value_joystick)

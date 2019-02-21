@@ -6,6 +6,8 @@ import AD_controller
 import Game_controller
 # import RPi.GPIO as GPIO
 from fake_rpi.RPi import GPIO as GPIO
+from fake_rpi import toggle_print
+toggle_print(False)
 
 # 定义常量和变量
 
@@ -33,7 +35,7 @@ GPIO.setup(HALL_1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(HALL_2_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
-# 找平程序
+# 找平程序(暂无)
 
 
 # 霍尔开关线程
@@ -59,10 +61,13 @@ def hall_2_callback(channel2):
 
 GPIO.add_event_detect(HALL_1_PIN, GPIO.RISING, callback=hall_1_callback)  # 会为回调函数另外开启一个线程，与主程序并发运行
 GPIO.add_event_detect(HALL_2_PIN, GPIO.RISING, callback=hall_2_callback)
+print("Two Hall thread started")
 
 # 启动游戏显示和平板测坐标线程
-game_controller.run()
-AD_controller.run()
+game_controller.start()
+print("game_controller thread started")
+AD_controller.start()
+print("AD_controller thread started")
 
 
 # 留有余量的比较
@@ -99,48 +104,56 @@ def master_thread_func():
         # 接收摇杆xy坐标
         if (not joystick_x_queue.empty()) and (not joystick_y_queue.empty()):
             joystick_x = joystick_x_queue.get()
+            print("In Master_controller main loop, got joystick_x from queue, joystick_x = ", joystick_x)
             joystick_y = joystick_y_queue.get()
+            print("In Master_controller main loop, got joystick_y from queue, joystick_y = ", joystick_y)
 
             # 计算所需脉冲值
             hall_1_target = (joystick_x - JOYSTICK_X_MIN - JOYSTICK_X_MID) / (
                         JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
             hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
                         JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
+            print("In Master_controller main loop, hall_1_target = ", hall_1_target, ", hall_2_target = ", hall_2_target)
 
             # 驱动电机
             if hall_1_counter < hall_1_target:
                 motor.Go_1()
                 motor_1_direction = 1
+                print("In Master_controller main loop, motor.Go_1")
 
             if hall_1_counter > hall_1_target:
                 motor.Back_1()
                 motor_1_direction = 2
+                print("In Master_controller main loop, motor.Back_1")
 
             if hall_2_counter < hall_2_target:
                 motor.Go_2()
                 motor_2_direction = 1
+                print("In Master_controller main loop, motor.Go_2")
 
             if hall_2_counter > hall_2_target:
                 motor.Back_2()
                 motor_2_direction = 2
+                print("In Master_controller main loop, motor.Back_2")
 
             if my_equal(hall_1_counter, hall_1_target):
                 motor.Stop_1()
                 motor_1_direction = 0
+                print("In Master_controller main loop, motor.Stop_1")
 
             if my_equal(hall_2_counter, hall_2_target):
                 motor.Stop_2()
                 motor_2_direction = 0
+                print("In Master_controller main loop, motor.Stop_2")
         else:
             motor.Stop_1()
+            # print("In Master_controller main loop, motor.Stop_1")
             motor.Stop_2()
+            # print("In Master_controller main loop, motor.Stop_2")
 
         # 平板坐标 --> 游戏显示
         if (not display_x_queue.empty()) and (not display_y_queue.empty()):
             temp_x = display_x_queue.get() * PYGAME_RESOLUTION_X
             temp_y = display_y_queue.get() * PYGAME_RESOLUTION_Y
             game_controller.display(temp_x, temp_y)
-
-
-# TODO: 如何结束程序，执行cleanup？
-GPIO.cleanup()
+            # print("In Master_controller main loop, displayed x = ", temp_x, ", y = ", temp_y)

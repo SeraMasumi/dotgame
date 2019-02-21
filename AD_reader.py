@@ -1,14 +1,15 @@
+import queue
 import subprocess
 import threading
 import shutil
 import io
 
 class AD_reader(threading.Thread):
-    def __init__(self, AD_tablet_value, AD_joystick_x_queue, AD_joystick_y_queue):
+    def __init__(self):
         threading.Thread.__init__(self)
-        self.AD_tablet_value = AD_tablet_value
-        self.AD_joystick_x_queue = AD_joystick_x_queue
-        self.AD_joystick_y_queue = AD_joystick_y_queue
+        self.AD_tablet_value = -1
+        self.AD_joystick_x_queue = queue.Queue()
+        self.AD_joystick_y_queue = queue.Queue()
 
     def run(self):
         err_buf = io.BytesIO()
@@ -20,13 +21,16 @@ class AD_reader(threading.Thread):
         for line in proc.stdout:
             lineEntry = line.decode('utf-8')
             if lineEntry[0] == '2' or lineEntry[0] == '3' or lineEntry[0] == '4':
-                number, code, bigNumber, voltage, smallNumber = AD_reader.WorkWithValues(lineEntry)
+                number, code, bigNumber, voltage, smallNumber = AD_reader.WorkWithValues(self, lineEntry)
                 if lineEntry[0] == '2':
                     self.AD_tablet_value = number
+                    print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
                     self.AD_joystick_x_queue.put(number)
+                    print("in AD_reader, AD_joystick_x_queue = ", self.AD_joystick_x_queue)
                 elif lineEntry[0] == '4':
                     self.AD_joystick_y_queue.put(number)
+                    print("in AD_reader, AD_joystick_y_queue = ", self.AD_joystick_y_queue)
                 # erg = number * bigNumber
                 # print(str(erg), end='\n')
                 # print(time.time() - t0,end='\n')
@@ -35,7 +39,7 @@ class AD_reader(threading.Thread):
         print('error:', err_buf.getvalue())
 
     # Funktion, welche den String einer Zeile aufteilt und die Werte zurück gibt
-    def WorkWithValues(lineEntry):
+    def WorkWithValues(self, lineEntry):
         numStr = ''
         bigNumStr = ''
         voltStr = ''
