@@ -124,8 +124,8 @@ class Master_controller(threading.Thread):
 
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
-                temp_x = display_x_queue.get() * PYGAME_RESOLUTION_X
-                temp_y = display_y_queue.get() * PYGAME_RESOLUTION_Y
+                temp_x = int(display_x_queue.get() * PYGAME_RESOLUTION_X)
+                temp_y = int(display_y_queue.get() * PYGAME_RESOLUTION_Y)
                 # print("in display loop")
                 if self.game_x_queue.empty():
                     self.game_x_queue.put(temp_x)
