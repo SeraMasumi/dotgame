@@ -5,6 +5,7 @@ import queue
 import AD_reader
 from fake_rpi.RPi import GPIO as GPIO
 from fake_rpi import toggle_print
+
 toggle_print(False)
 
 
@@ -89,10 +90,12 @@ class AD_controller(threading.Thread):
             # print("in AD_controller, ratio_y put in queue. display ratio_y = ", self.ratio_y)
 
             # 测量手柄xy
-            if((not self.AD_reader.AD_joystick_x_queue.empty()) and (not self.AD_reader.AD_joystick_y_queue.empty())):
+            if ((not self.AD_reader.AD_joystick_x_queue.empty()) and (not self.AD_reader.AD_joystick_y_queue.empty())):
                 input_x_value_joystick = self.AD_reader.AD_joystick_x_queue.get()
                 input_y_value_joystick = self.AD_reader.AD_joystick_y_queue.get()
                 self.joystick_x_queue.put(input_x_value_joystick)
-                print("in AD_controller, input_x_value_joystick put in queue. display input_x_value_joystick = ", input_x_value_joystick)
+                print("in AD_controller, input_x_value_joystick put in queue. display input_x_value_joystick = ",
+                      input_x_value_joystick)
                 self.joystick_y_queue.put(input_y_value_joystick)
-                print("in AD_controller, input_y_value_joystick put in queue. display input_y_value_joystick = ", input_y_value_joystick)
+                print("in AD_controller, input_y_value_joystick put in queue. display input_y_value_joystick = ",
+                      input_y_value_joystick)

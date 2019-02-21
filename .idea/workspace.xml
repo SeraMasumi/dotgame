@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="997e260b-4378-46e3-8b48-1fb95da8230d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AD_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/AD_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AD_reader.py" beforeDir="false" afterPath="$PROJECT_DIR$/AD_reader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Master_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Master_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Touchpannel.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AD_reader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+            <state relative-caret-position="918">
+              <caret line="54" column="30" lean-forward="true" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -32,10 +30,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Game_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="147" column="14" lean-forward="true" selection-start-line="147" selection-start-column="14" selection-end-line="147" selection-end-column="14" />
+            <state relative-caret-position="510">
+              <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
               <folding>
                 <element signature="e#18#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Master_controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+              <folding>
+                <element signature="e#18#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/text_input_sloth.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="907">
+              <caret line="169" column="69" selection-start-line="169" selection-start-column="69" selection-end-line="169" selection-end-column="69" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -58,22 +80,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AD_controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="88" column="14" selection-start-line="88" selection-start-column="14" selection-end-line="88" selection-end-column="14" />
+            <state relative-caret-position="544">
+              <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
               <folding>
                 <element signature="e#45#61#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Master_controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="158" column="95" selection-start-line="158" selection-start-column="95" selection-end-line="158" selection-end-column="95" />
-              <folding>
-                <element signature="e#18#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,6 +123,10 @@
     <findStrings>
       <find>joystick_x</find>
       <find>motor_1_running</find>
+      <find>ad_controller</find>
+      <find>game_controller</find>
+      <find>hall_1_counter</find>
+      <find>display_x_queue</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,10 +151,10 @@
         <option value="$PROJECT_DIR$/Touchpannel_controller.py" />
         <option value="$PROJECT_DIR$/Balance_controller.py" />
         <option value="$PROJECT_DIR$/test2.py" />
-        <option value="$PROJECT_DIR$/AD_reader.py" />
-        <option value="$PROJECT_DIR$/AD_controller.py" />
         <option value="$PROJECT_DIR$/Game_controller.py" />
         <option value="$PROJECT_DIR$/Master_controller.py" />
+        <option value="$PROJECT_DIR$/AD_controller.py" />
+        <option value="$PROJECT_DIR$/AD_reader.py" />
       </list>
     </option>
   </component>
@@ -201,7 +215,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Master_controller">
+  <component name="RunManager" selected="Python.dotgame">
     <configuration name="Balance_controller" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="drawdot1.0" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -309,8 +323,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Master_controller" />
         <item itemvalue="Python.dotgame" />
+        <item itemvalue="Python.Master_controller" />
         <item itemvalue="Python.Balance_controller" />
         <item itemvalue="Python.threading" />
         <item itemvalue="Python.Motor" />
@@ -337,12 +351,12 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7445521" visible="true" weight="0.25256178" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7445521" visible="true" weight="0.25256178" />
       <window_info id="Structure" order="1" sideWeight="0.25544795" side_tool="true" weight="0.25256178" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.43163267" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43163267" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -398,16 +412,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textinput.py" />
-    <entry file="file://$PROJECT_DIR$/text_input_sloth.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2822">
-          <caret line="169" column="69" selection-start-line="169" selection-start-column="69" selection-end-line="169" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.7/site-packages/fake_rpi/RPi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -482,20 +486,10 @@
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/AD_reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AD_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="88" column="14" selection-start-line="88" selection-start-column="14" selection-end-line="88" selection-end-column="14" />
+        <state relative-caret-position="544">
+          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
           <folding>
             <element signature="e#45#61#0" expanded="true" />
           </folding>
@@ -504,8 +498,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Game_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="147" column="14" lean-forward="true" selection-start-line="147" selection-start-column="14" selection-end-line="147" selection-end-column="14" />
+        <state relative-caret-position="510">
+          <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
           <folding>
             <element signature="e#18#31#0" expanded="true" />
           </folding>
@@ -514,10 +508,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Master_controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="158" column="95" selection-start-line="158" selection-start-column="95" selection-end-line="158" selection-end-column="95" />
+        <state relative-caret-position="459">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
           <folding>
             <element signature="e#18#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text_input_sloth.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="907">
+          <caret line="169" column="69" selection-start-line="169" selection-start-column="69" selection-end-line="169" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AD_reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="54" column="30" lean-forward="true" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
