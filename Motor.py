@@ -1,10 +1,12 @@
 #!/usr/bin/python
-import fake_rpi.RPi.GPIO as GPIO # Replace libraries by fake ones
-# import RPi.GPIO as GPIO
 import time
-import signal   
-
+import signal
 from PiSoftPwm import *
+# import RPi.GPIO as GPIO
+from fake_rpi.RPi import GPIO as GPIO
+from fake_rpi import toggle_print
+
+
 
 #print 'Go_1...'
 #frequency = 1.0 / self.sc_1.GetValue()
@@ -70,13 +72,16 @@ class Motor():
         self.OUT_3.changeNbSlicesOn(self.duty)
         self.OUT_4.changeNbSlicesOn(0)
 
-    def Stop(self):
+    def Stop_1(self):
         self.OUT_1.changeNbSlicesOn(0)
         self.OUT_2.changeNbSlicesOn(0)
+
+    def Stop_2(self):
         self.OUT_3.changeNbSlicesOn(0)
         self.OUT_4.changeNbSlicesOn(0)
 
 if __name__=="__main__":
+    toggle_print(False)
     motor=Motor()
     # Called on process interruption. Set all pins to "Input" default mode.
     def endProcess(signalnum = None, handler = None):
@@ -103,7 +108,7 @@ if __name__=="__main__":
         motor.Back_1()
         time.sleep(1)
         print ('motor A stop...')
-        motor.Stop()
+        motor.Stop_1()
         time.sleep(1)
         print ('motor B turning forward...')
         motor.Go_2()
@@ -112,5 +117,5 @@ if __name__=="__main__":
         motor.Back_2()
         time.sleep(1)
         print ('motor B stop...')
-        motor.Stop()
+        motor.Stop_2()
         time.sleep(1)
