@@ -23,17 +23,17 @@ class Motor():
         self._IN4 = 27
 
     # Initialize PWMA PWMB 
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.PWMA, GPIO.OUT)
         GPIO.setup(self.PWMB, GPIO.OUT)
         GPIO.output(self.PWMA, True)
         GPIO.output(self.PWMB, True)
 
     # Initialize PWM outputs
-        self.OUT_1  = PiSoftPwm(0.1, 100, self._IN1, GPIO.BCM)
-        self.OUT_2  = PiSoftPwm(0.1, 100, self._IN2, GPIO.BCM)
-        self.OUT_3  = PiSoftPwm(0.1, 100, self._IN3, GPIO.BCM)
-        self.OUT_4  = PiSoftPwm(0.1, 100, self._IN4, GPIO.BCM)
+        self.OUT_1  = PiSoftPwm(0.1, 100, self._IN1, GPIO.BOARD)
+        self.OUT_2  = PiSoftPwm(0.1, 100, self._IN2, GPIO.BOARD)
+        self.OUT_3  = PiSoftPwm(0.1, 100, self._IN3, GPIO.BOARD)
+        self.OUT_4  = PiSoftPwm(0.1, 100, self._IN4, GPIO.BOARD)
 
         # Close pwm output
         self.OUT_1.start(0)
