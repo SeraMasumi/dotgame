@@ -5,11 +5,11 @@ import threading
 # from pynput import keyboard
 # import Game_controller
 import AD_controller
-# import RPi.GPIO as GPIO
-from fake_rpi.RPi import GPIO as GPIO
-from fake_rpi import toggle_print
-
-toggle_print(False)
+import RPi.GPIO as GPIO
+# from fake_rpi.RPi import GPIO as GPIO
+# from fake_rpi import toggle_print
+#
+# toggle_print(False)
 
 
 class Master_controller(threading.Thread):
@@ -65,8 +65,8 @@ class Master_controller(threading.Thread):
         JOYSTICK_Y_MIN = 28500
         JOYSTICK_X_MID = 4451000
         JOYSTICK_Y_MID = 4397000
-        joystick_x: int = 0
-        joystick_y: int = 0
+        joystick_x = 0
+        joystick_y = 0
         PYGAME_RESOLUTION_X = 1024
         PYGAME_RESOLUTION_Y = 768
 

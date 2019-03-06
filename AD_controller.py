@@ -1,19 +1,18 @@
 #!/usr/bin/python
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import threading
 import queue
 import AD_reader
-from fake_rpi.RPi import GPIO as GPIO
-from fake_rpi import toggle_print
-
-toggle_print(False)
+# from fake_rpi.RPi import GPIO as GPIO
+# from fake_rpi import toggle_print
+#
+# toggle_print(False)
 
 
 class AD_controller(threading.Thread):
     def __init__(self, display_x_queue, display_y_queue, joystick_x_queue, joystick_y_queue):
         threading.Thread.__init__(self)
-        self.TABLET_IN_PIN = 2
-        self.chan_list_out = [32, 33, 35, 36, 37, 38, 40]
+        self.chan_list_out = [33, 35, 36, 37, 38, 40]
         self.chan_list_in = [2, 3, 4]
         self.ratio_x = 0
         self.ratio_y = 0
@@ -28,7 +27,6 @@ class AD_controller(threading.Thread):
         GPIO.setup(self.chan_list_in, GPIO.IN)
 
     def measure_x(self):
-        GPIO.output(32, GPIO.HIGH)
         GPIO.output(33, GPIO.LOW)
         GPIO.output(35, GPIO.LOW)
         GPIO.output(36, GPIO.HIGH)
@@ -37,7 +35,6 @@ class AD_controller(threading.Thread):
         GPIO.output(40, GPIO.HIGH)
 
     def measure_y(self):
-        GPIO.output(32, GPIO.LOW)
         GPIO.output(33, GPIO.LOW)
         GPIO.output(35, GPIO.HIGH)
         GPIO.output(36, GPIO.LOW)
@@ -46,7 +43,6 @@ class AD_controller(threading.Thread):
         GPIO.output(40, GPIO.HIGH)
 
     def all_close(self):
-        GPIO.output(32, GPIO.HIGH)
         GPIO.output(33, GPIO.HIGH)
         GPIO.output(35, GPIO.HIGH)
         GPIO.output(36, GPIO.LOW)
@@ -74,11 +70,11 @@ class AD_controller(threading.Thread):
             # 测量平板xy
             AD_controller.measure_x(self)
             input_x_value_tablet = self.AD_reader.AD_tablet_value
-            # print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+            print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
             input_y_value_tablet = self.AD_reader.AD_tablet_value
-            # print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
+            print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
 
             # 计算要显示的xy坐标
             self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)

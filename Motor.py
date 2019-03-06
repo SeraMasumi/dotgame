@@ -2,8 +2,8 @@
 import time
 import signal
 from PiSoftPwm import *
-# import RPi.GPIO as GPIO
-from fake_rpi.RPi import GPIO as GPIO
+import RPi.GPIO as GPIO
+# from fake_rpi.RPi import GPIO as GPIO
 from fake_rpi import toggle_print
 
 
@@ -80,42 +80,42 @@ class Motor():
         self.OUT_3.changeNbSlicesOn(0)
         self.OUT_4.changeNbSlicesOn(0)
 
-if __name__=="__main__":
-    toggle_print(False)
-    motor=Motor()
-    # Called on process interruption. Set all pins to "Input" default mode.
-    def endProcess(signalnum = None, handler = None):
-        motor.OUT_1.stop()
-        motor.OUT_2.stop()
-        motor.OUT_3.stop()
-        motor.OUT_4.stop()
-        motor.GPIO.cleanup()
-        exit(0)
-
-    # Prepare handlers for process exit
-    signal.signal(signal.SIGTERM, endProcess)
-    signal.signal(signal.SIGINT, endProcess)
-    signal.signal(signal.SIGHUP, endProcess)
-    signal.signal (signal.SIGQUIT, endProcess)
-
-    motor.Setting(0.01, 60)
-    print ('motor start...')
-    while True:
-        print ('motor A turning forward...')
-        motor.Go_1()
-        time.sleep(1)
-        print ('motor A turning backward...')
-        motor.Back_1()
-        time.sleep(1)
-        print ('motor A stop...')
-        motor.Stop_1()
-        time.sleep(1)
-        print ('motor B turning forward...')
-        motor.Go_2()
-        time.sleep(1)
-        print ('motor B turning backward...')
-        motor.Back_2()
-        time.sleep(1)
-        print ('motor B stop...')
-        motor.Stop_2()
-        time.sleep(1)
+# if __name__=="__main__":
+#     toggle_print(False)
+#     motor=Motor()
+#     # Called on process interruption. Set all pins to "Input" default mode.
+#     def endProcess(signalnum = None, handler = None):
+#         motor.OUT_1.stop()
+#         motor.OUT_2.stop()
+#         motor.OUT_3.stop()
+#         motor.OUT_4.stop()
+#         motor.GPIO.cleanup()
+#         exit(0)
+#
+#     # Prepare handlers for process exit
+#     signal.signal(signal.SIGTERM, endProcess)
+#     signal.signal(signal.SIGINT, endProcess)
+#     signal.signal(signal.SIGHUP, endProcess)
+#     signal.signal (signal.SIGQUIT, endProcess)
+#
+#     motor.Setting(0.01, 60)
+#     print ('motor start...')
+#     while True:
+#         print ('motor A turning forward...')
+#         motor.Go_1()
+#         time.sleep(1)
+#         print ('motor A turning backward...')
+#         motor.Back_1()
+#         time.sleep(1)
+#         print ('motor A stop...')
+#         motor.Stop_1()
+#         time.sleep(1)
+#         print ('motor B turning forward...')
+#         motor.Go_2()
+#         time.sleep(1)
+#         print ('motor B turning backward...')
+#         motor.Back_2()
+#         time.sleep(1)
+#         print ('motor B stop...')
+#         motor.Stop_2()
+#         time.sleep(1)

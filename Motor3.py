@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 import RPi.GPIO as GPIO
 import time
 import signal
@@ -61,31 +61,33 @@ class Motor():
        self.OUT_2.changeNbSlicesOn(0)
        self.OUT_3.changeNbSlicesOn(0)
        self.OUT_4.changeNbSlicesOn(0)
-if __name__=="__main__":
-    motor=Motor()
-    # Called on process interruption. Set all pins to "Input" default mode.
-    def endProcess(signalnum = None, handler = None):
-       motor.OUT_1.stop()
-       motor.OUT_2.stop()
-       motor.OUT_3.stop()
-       motor.OUT_4.stop()
-       motor.GPIO.cleanup()
-       exit(0)
-    # Prepare handlers for process exit
-    signal.signal(signal.SIGTERM, endProcess)
-    signal.signal(signal.SIGINT, endProcess)
-    signal.signal(signal.SIGHUP, endProcess)
-    signal.signal (signal.SIGQUIT, endProcess)
-    motor.Setting(0.01, 60)
-    print ('motor start...')
-    while True:
-       print ('turning direction...')
-       motor.Go_1()
-       time.sleep(1)
-       motor.Back_1()
-       time.sleep(1)
-       motor.Go_2()
-       time.sleep(1)
-       motor.Back_2()
-       time.sleep(1)
+
+
+# if __name__=="__main__":
+#     motor=Motor()
+#     # Called on process interruption. Set all pins to "Input" default mode.
+#     def endProcess(signalnum = None, handler = None):
+#        motor.OUT_1.stop()
+#        motor.OUT_2.stop()
+#        motor.OUT_3.stop()
+#        motor.OUT_4.stop()
+#        motor.GPIO.cleanup()
+#        exit(0)
+#     # Prepare handlers for process exit
+#     signal.signal(signal.SIGTERM, endProcess)
+#     signal.signal(signal.SIGINT, endProcess)
+#     signal.signal(signal.SIGHUP, endProcess)
+#     signal.signal (signal.SIGQUIT, endProcess)
+#     motor.Setting(0.01, 60)
+#     print ('motor start...')
+#     while True:
+#        print ('turning direction...')
+#        motor.Go_1()
+#        time.sleep(1)
+#        motor.Back_1()
+#        time.sleep(1)
+#        motor.Go_2()
+#        time.sleep(1)
+#        motor.Back_2()
+#        time.sleep(1)
 

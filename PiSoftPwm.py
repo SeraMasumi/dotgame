@@ -1,8 +1,8 @@
 # The original is aboudou ,the Source code is here : https://goddess-gate.com/dc2/index.php/pages/raspiledmeter.en
 # The modifier is ukonline2000
 
-#import RPi.GPIO as GPIO
-from fake_rpi.RPi import GPIO
+import RPi.GPIO as GPIO
+# from fake_rpi.RPi import GPIO
 import threading
 import time
  
