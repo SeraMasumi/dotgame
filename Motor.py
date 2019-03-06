@@ -15,12 +15,12 @@ import RPi.GPIO as GPIO
 class Motor():
     def __init__(self):
     # MC33932 pins
-        self.PWMA = 25  
-        self.PWMB = 22
-        self._IN1 = 23  
-        self._IN2 = 24 
-        self._IN3 = 17
-        self._IN4 = 27
+        self.PWMA = 22
+        self.PWMB = 10
+        self._IN1 = 29
+        self._IN2 = 18
+        self._IN3 = 3
+        self._IN4 = 8
 
     # Initialize PWMA PWMB 
         GPIO.setmode(GPIO.BOARD)
