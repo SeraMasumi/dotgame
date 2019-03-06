@@ -24,7 +24,13 @@ class AD_controller(threading.Thread):
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.chan_list_out, GPIO.OUT)
+        '''
         GPIO.setup(self.chan_list_in, GPIO.IN)
+        '''
+        GPIO.setup(2, GPIO.IN)
+        GPIO.setup(3, GPIO.IN)
+        GPIO.setup(4, GPIO.IN)
+
 
     def measure_x(self):
         GPIO.output(33, GPIO.LOW)
