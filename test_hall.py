@@ -34,6 +34,7 @@ class test_hall(threading.Thread):
             if self.hall_1_counter > 1000:
                 motor.Stop_1()
                 print("reached 1000.")
+                break
 
     # 霍尔开关线程
     def hall_1_callback(self, channel1):

@@ -69,8 +69,9 @@ class AD_controller(threading.Thread):
         input_y_value_tablet = 0
         input_x_value_joystick = 0
         input_y_value_joystick = 0
+        '''
         while True:
-            '''
+            
             # 测量平板xy
             AD_controller.measure_x(self)
             input_x_value_tablet = self.AD_reader.AD_tablet_value
