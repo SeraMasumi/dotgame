@@ -70,6 +70,7 @@ class AD_controller(threading.Thread):
         input_x_value_joystick = 0
         input_y_value_joystick = 0
         while True:
+            '''
             # 测量平板xy
             AD_controller.measure_x(self)
             input_x_value_tablet = self.AD_reader.AD_tablet_value
@@ -87,9 +88,10 @@ class AD_controller(threading.Thread):
             # print("in AD_controller, ratio_x put in queue. display ratio_x = ", self.ratio_x)
             self.display_y_queue.put(self.ratio_y)
             # print("in AD_controller, ratio_y put in queue. display ratio_y = ", self.ratio_y)
+            '''
 
-            print("in AD_controller, joystick_x_queue size = ", self.joystick_x_queue.qsize())
-            print("in AD_controller, joystick_y_queue size = ", self.joystick_y_queue.qsize())
+            # print("in AD_controller, joystick_x_queue size = ", self.joystick_x_queue.qsize())
+            # print("in AD_controller, joystick_y_queue size = ", self.joystick_y_queue.qsize())
 
             # 测量手柄xy
             # if ((not self.AD_reader.AD_joystick_x_queue.empty()) and (not self.AD_reader.AD_joystick_y_queue.empty())):
