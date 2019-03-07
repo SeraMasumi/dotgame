@@ -15,8 +15,8 @@ import RPi.GPIO as GPIO
 # toggle_print(False)
 
 
-class Master_controller(threading.Thread):
-    def __init__(self, game_x_queue, game_y_queue):
+class test_hall(threading.Thread):
+    def __init__(self):
         threading.Thread.__init__(self)
         self.HALL_1_PIN = 31
         self.hall_1_counter = 0
@@ -39,3 +39,6 @@ class Master_controller(threading.Thread):
         if GPIO.event_detected(self.HALL_1_PIN):
             self.hall_1_counter = self.hall_1_counter + 1
             print("hall signal detected, hall_1_counter + 1.")
+
+runner = test_hall()
+runner.run()
