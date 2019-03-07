@@ -28,9 +28,10 @@ class AD_reader(threading.Thread):
                     # print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
                     self.AD_joystick_x_queue.put(bigNumber)
+                    AD_reader.myPut(self, self.AD_joystick_x_queue, bigNumber)
                     # print("in AD_reader, AD_joystick_x_queue size = ", self.AD_joystick_x_queue.qsize())
                 elif lineEntry[0] == '4':
-                    self.AD_joystick_y_queue.put(bigNumber)
+                    AD_reader.myPut(self, self.AD_joystick_y_queue, bigNumber)
                     # print("in AD_reader, AD_joystick_y_queue size = ", self.AD_joystick_y_queue.qsize())
                 # erg = number * bigNumber
                 # print(str(erg), end='\n')
@@ -87,3 +88,10 @@ class AD_reader(threading.Thread):
         smallNumber = int(smallNumStr)
         # print(str(number) + "=" + code + ",   " + str(bigNumber) + " ( " + str(voltage) + " " + str(smallNumber) + " V) \n")
         return number, code, bigNumber, voltage, smallNumber
+
+    def myPut(self, queue, element):
+        QSIZE = 2
+        if(queue.qsize() >= QSIZE):
+            while(queue.qsize() >= QSIZE):
+                queue.get()
+        queue.put(element)

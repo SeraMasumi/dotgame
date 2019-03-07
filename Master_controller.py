@@ -57,8 +57,8 @@ class Master_controller(threading.Thread):
         # global hall_2_counter
         hall_1_target = self.hall_1_counter
         hall_2_target = self.hall_2_counter
-        HALL_1_MAX = 60
-        HALL_2_MAX = 60
+        HALL_1_MAX = 100
+        HALL_2_MAX = 100
         JOYSTICK_X_MAX = 8388607
         JOYSTICK_X_MIN = 28500
         JOYSTICK_Y_MAX = 8388607
@@ -86,8 +86,8 @@ class Master_controller(threading.Thread):
                         JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
                 hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
                         JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
-                print("In Master_controller, hall_1_target = ", hall_1_target, ", hall_2_target = ",
-                      hall_2_target)
+                print("In Master_controller, hall_1_target = ", int(hall_1_target), ", hall_2_target = ",
+                      int(hall_2_target))
                 print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
                       self.hall_2_counter)
 
@@ -117,16 +117,20 @@ class Master_controller(threading.Thread):
                     motor.Stop_1()
                     self.motor_1_direction = 0
                     print("In Master_controller main loop, motor.Stop_1")
+                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
+                          self.hall_2_counter)
 
                 if self.my_equal(self.hall_2_counter, hall_2_target):
                     motor.Stop_2()
                     self.motor_2_direction = 0
                     print("In Master_controller main loop, motor.Stop_2")
+                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
+                          self.hall_2_counter)
             else:
                 motor.Stop_1()
-                # print("In Master_controller main loop, motor.Stop_1")
+                print("queue empty, motor.Stop_1")
                 motor.Stop_2()
-                # print("In Master_controller main loop, motor.Stop_2")
+                print("queue empty, motor.Stop_2")
 
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
