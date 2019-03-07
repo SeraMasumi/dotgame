@@ -80,19 +80,17 @@ class Master_controller(threading.Thread):
             # 接收摇杆xy坐标
             if (not joystick_x_queue.empty()) and (not joystick_y_queue.empty()):
                 joystick_x = joystick_x_queue.get()
-                print("joystick_x = ", joystick_x)
+                # print("joystick_x = ", joystick_x)
                 joystick_y = joystick_y_queue.get()
-                print("joystick_y = ", joystick_y)
+                # print("joystick_y = ", joystick_y)
 
                 # 计算所需脉冲值
                 hall_1_target = (joystick_x - JOYSTICK_X_MIN - JOYSTICK_X_MID) / (
                         JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
                 hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
                         JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
-                print("In Master_controller, hall_1_target = ", int(hall_1_target), ", hall_2_target = ",
-                      int(hall_2_target))
-                print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
-                      self.hall_2_counter)
+                # print("In Master_controller, hall_1_target = ", int(hall_1_target), ", hall_2_target = ", int(hall_2_target))
+                # print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ", self.hall_2_counter)
 
 
             # 驱动电机
@@ -101,44 +99,42 @@ class Master_controller(threading.Thread):
                 if not (self.motor_1_direction == 2 and cur_time - time_1 < 1):
                     motor.Go_1()
                     self.motor_1_direction = 1
-                    print("In Master_controller main loop, motor.Go_1")
+                    # print("In Master_controller main loop, motor.Go_1")
 
             if self.hall_1_counter > hall_1_target:
                 cur_time = time.time()
                 if not (self.motor_1_direction == 1 and cur_time - time_1 < 1):
                     motor.Back_1()
                     self.motor_1_direction = 2
-                    print("In Master_controller main loop, motor.Back_1")
+                    # print("In Master_controller main loop, motor.Back_1")
 
             if self.hall_2_counter < hall_2_target:
                 cur_time = time.time()
                 if not (self.motor_2_direction == 2 and cur_time - time_2 < 1):
                     motor.Go_2()
                     self.motor_2_direction = 1
-                    print("In Master_controller main loop, motor.Go_2")
+                    # print("In Master_controller main loop, motor.Go_2")
 
             if self.hall_2_counter > hall_2_target:
                 cur_time = time.time()
                 if not (self.motor_2_direction == 1 and cur_time - time_2 < 1):
                     motor.Back_2()
                     self.motor_2_direction = 2
-                    print("In Master_controller main loop, motor.Back_2")
+                    # print("In Master_controller main loop, motor.Back_2")
 
             if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
                 self.motor_1_direction = 0
                 time_1 = time.time()
-                print("In Master_controller main loop, motor.Stop_1")
-                print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ",
-                      int(hall_1_target))
+                # print("In Master_controller main loop, motor.Stop_1")
+                # print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ", int(hall_1_target))
 
             if self.my_equal(self.hall_2_counter, hall_2_target):
                 motor.Stop_2()
                 self.motor_2_direction = 0
                 time_2 = time.time()
-                print("In Master_controller main loop, motor.Stop_2")
-                print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
-                      int(hall_2_target))
+                # print("In Master_controller main loop, motor.Stop_2")
+                # print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ", int(hall_2_target))
             '''
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
@@ -162,19 +158,19 @@ class Master_controller(threading.Thread):
         if GPIO.event_detected(self.HALL_1_PIN):
             if self.motor_1_direction == 1:
                 self.hall_1_counter = self.hall_1_counter + 1
-                print("hall signal detected, hall_1_counter + 1.")
+                # print("hall signal detected, hall_1_counter + 1.")
             elif self.motor_1_direction == 2:
                 self.hall_1_counter = self.hall_1_counter - 1
-                print("hall signal detected, hall_1_counter - 1.")
+                # print("hall signal detected, hall_1_counter - 1.")
 
     def hall_2_callback(self, channel2):
         if GPIO.event_detected(self.HALL_2_PIN):
             if self.motor_2_direction == 1:
                 self.hall_2_counter = self.hall_2_counter + 1
-                print("hall signal detected, hall_2_counter + 1.")
+                # print("hall signal detected, hall_2_counter + 1.")
             elif self.motor_2_direction == 2:
                 self.hall_2_counter = self.hall_2_counter - 1
-                print("hall signal detected, hall_2_counter - 1.")
+                # print("hall signal detected, hall_2_counter - 1.")
 
     # 留有余量的比较
     def my_equal(self, a, b):
