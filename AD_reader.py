@@ -24,14 +24,14 @@ class AD_reader(threading.Thread):
             if lineEntry[0] == '2' or lineEntry[0] == '3' or lineEntry[0] == '4':
                 number, code, bigNumber, voltage, smallNumber = AD_reader.WorkWithValues(self, lineEntry)
                 if lineEntry[0] == '2':
-                    self.AD_tablet_value = number
+                    self.AD_tablet_value = bigNumber
                     print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
                     self.AD_joystick_x_queue.put(number)
-                    print("in AD_reader, AD_joystick_x_queue = ", self.AD_joystick_x_queue)
+                    print("in AD_reader, AD_joystick_x_queue size = ", self.AD_joystick_x_queue.qsize())
                 elif lineEntry[0] == '4':
                     self.AD_joystick_y_queue.put(number)
-                    print("in AD_reader, AD_joystick_y_queue = ", self.AD_joystick_y_queue)
+                    print("in AD_reader, AD_joystick_y_queue size = ", self.AD_joystick_y_queue.qsize())
                 # erg = number * bigNumber
                 # print(str(erg), end='\n')
                 # print(time.time() - t0,end='\n')
