@@ -24,6 +24,8 @@ class Master_controller(threading.Thread):
         self.motor_2_direction = 0
         self.game_x_queue = game_x_queue
         self.game_y_queue = game_y_queue
+        self.Last_direction_x = 1
+        self.Last_direction_y = 1
 
     def run(self):
 
@@ -94,28 +96,28 @@ class Master_controller(threading.Thread):
 
 
             # 驱动电机
-            if self.hall_1_counter < hall_1_target:
+            if self.hall_1_counter < (hall_1_target - 3):
                 cur_time = time.time()
                 if not (self.motor_1_direction == 2 and cur_time - time_1 < 1):
                     motor.Go_1()
                     self.motor_1_direction = 1
                     # print("In Master_controller main loop, motor.Go_1")
 
-            if self.hall_1_counter > hall_1_target:
+            if self.hall_1_counter > (hall_1_target + 3):
                 cur_time = time.time()
                 if not (self.motor_1_direction == 1 and cur_time - time_1 < 1):
                     motor.Back_1()
                     self.motor_1_direction = 2
                     # print("In Master_controller main loop, motor.Back_1")
 
-            if self.hall_2_counter < hall_2_target:
+            if self.hall_2_counter < (hall_2_target - 3):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 2 and cur_time - time_2 < 1):
                     motor.Go_2()
                     self.motor_2_direction = 1
                     # print("In Master_controller main loop, motor.Go_2")
 
-            if self.hall_2_counter > hall_2_target:
+            if self.hall_2_counter > (hall_2_target + 3):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 1 and cur_time - time_2 < 1):
                     motor.Back_2()
@@ -124,15 +126,19 @@ class Master_controller(threading.Thread):
 
             if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
-                self.motor_1_direction = 0
-                time_1 = time.time()
+                if (self.motor_1_direction != 0):
+                    self.Last_direction_x = self.motor_1_direction
+                    self.motor_1_direction = 0
+                    time_1 = time.time()
                 # print("In Master_controller main loop, motor.Stop_1")
                 # print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ", int(hall_1_target))
 
             if self.my_equal(self.hall_2_counter, hall_2_target):
                 motor.Stop_2()
-                self.motor_2_direction = 0
-                time_2 = time.time()
+                if (self.motor_2_direction != 0):
+                    self.Last_direction_y = self.motor_2_direction
+                    self.motor_2_direction = 0
+                    time_2 = time.time()
                 # print("In Master_controller main loop, motor.Stop_2")
                 # print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ", int(hall_2_target))
             '''
@@ -162,6 +168,11 @@ class Master_controller(threading.Thread):
             elif self.motor_1_direction == 2:
                 self.hall_1_counter = self.hall_1_counter - 1
                 # print("hall signal detected, hall_1_counter - 1.")
+            elif self.motor_1_direction == 0:
+                if (self.Last_direction_x == 1):
+                    self.hall_1_counter = self.hall_1_counter + 1
+                elif (self.Last_direction_x == 2):
+                    self.hall_1_counter = self.hall_1_counter - 1
 
     def hall_2_callback(self, channel2):
         if GPIO.event_detected(self.HALL_2_PIN):
@@ -171,6 +182,11 @@ class Master_controller(threading.Thread):
             elif self.motor_2_direction == 2:
                 self.hall_2_counter = self.hall_2_counter - 1
                 # print("hall signal detected, hall_2_counter - 1.")
+            elif self.motor_2_direction == 0:
+                if (self.Last_direction_y == 1):
+                    self.hall_2_counter = self.hall_2_counter + 1
+                elif (self.Last_direction_y == 2):
+                    self.hall_2_counter = self.hall_2_counter - 1
 
     # 留有余量的比较
     def my_equal(self, a, b):
