@@ -15,7 +15,6 @@ import RPi.GPIO as GPIO
 class Master_controller(threading.Thread):
     def __init__(self, game_x_queue, game_y_queue):
         threading.Thread.__init__(self)
-        self.EQUAL_BUFFER = 3  # 判断相等的缓冲量
         self.HALL_1_PIN = 31  # 霍尔开关端口
         self.HALL_2_PIN = 32
         self.hall_1_counter = 0  # 霍尔开关接收的脉冲计数
@@ -117,15 +116,15 @@ class Master_controller(threading.Thread):
                     motor.Stop_1()
                     self.motor_1_direction = 0
                     print("In Master_controller main loop, motor.Stop_1")
-                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
-                          self.hall_2_counter)
+                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ",
+                          hall_1_target)
 
                 if self.my_equal(self.hall_2_counter, hall_2_target):
                     motor.Stop_2()
                     self.motor_2_direction = 0
                     print("In Master_controller main loop, motor.Stop_2")
-                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
-                          self.hall_2_counter)
+                    print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
+                          hall_2_target)
             else:
                 motor.Stop_1()
                 print("queue empty, motor.Stop_1")
@@ -165,8 +164,8 @@ class Master_controller(threading.Thread):
 
     # 留有余量的比较
     def my_equal(self, a, b):
-        global EQUAL_BUFFER
-        if (a - b) < self.EQUAL_BUFFER or (a - b) > -self.EQUAL_BUFFER:
+        EQUAL_BUFFER = 3
+        if abs(a - b) < EQUAL_BUFFER:
             return True
         else:
             return False
