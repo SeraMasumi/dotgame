@@ -1,3 +1,9 @@
 __pycache__/
 venv/
 .idea/
+ads1256_test
+ads1256_test.c
+ads1256_test.o
+Makefile
+tmp.c
+tmp.o
