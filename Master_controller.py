@@ -92,7 +92,7 @@ class Master_controller(threading.Thread):
 
 
             # 驱动电机
-            if self.hall_1_counter < hall_1_target:m
+            if self.hall_1_counter < hall_1_target:
                 motor.Go_1()
                 self.motor_1_direction = 1
                 print("In Master_controller main loop, motor.Go_1")
