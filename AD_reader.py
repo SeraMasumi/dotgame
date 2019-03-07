@@ -27,10 +27,10 @@ class AD_reader(threading.Thread):
                     self.AD_tablet_value = bigNumber
                     # print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
-                    self.AD_joystick_x_queue.put(number)
+                    self.AD_joystick_x_queue.put(bigNumber)
                     # print("in AD_reader, AD_joystick_x_queue size = ", self.AD_joystick_x_queue.qsize())
                 elif lineEntry[0] == '4':
-                    self.AD_joystick_y_queue.put(number)
+                    self.AD_joystick_y_queue.put(bigNumber)
                     # print("in AD_reader, AD_joystick_y_queue size = ", self.AD_joystick_y_queue.qsize())
                 # erg = number * bigNumber
                 # print(str(erg), end='\n')
