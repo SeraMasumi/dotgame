@@ -71,6 +71,9 @@ class Master_controller(threading.Thread):
         PYGAME_RESOLUTION_Y = 768
 
         while True:
+            print("entered Master_controller while loop")
+            print("In Master_controller, joystick_x_queue size is ", joystick_x_queue.qsize())
+            print("In Master_controller, joystick_y_queue size is ", joystick_y_queue.qsize())
             # 接收摇杆xy坐标
             if (not joystick_x_queue.empty()) and (not joystick_y_queue.empty()):
                 joystick_x = joystick_x_queue.get()

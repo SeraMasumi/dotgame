@@ -88,6 +88,7 @@ class Game_controller(threading.Thread):
 
         master_controller = Master_controller.Master_controller(self.input_x_queue, self.input_y_queue)
         master_controller.start()
+        print("Master_controller started.")
 
         # 游戏主循环
         while running:
