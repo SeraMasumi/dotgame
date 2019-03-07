@@ -2,6 +2,7 @@
 import queue
 import Motor
 import threading
+import time
 # from pynput import keyboard
 # import Game_controller
 import AD_controller
@@ -69,6 +70,9 @@ class Master_controller(threading.Thread):
         PYGAME_RESOLUTION_X = 1024
         PYGAME_RESOLUTION_Y = 768
 
+        time_1 = time.time()
+        time_2 = time.time()
+
         while True:
             print("entered Master_controller while loop")
             print("In Master_controller, joystick_x_queue size is ", joystick_x_queue.qsize())
@@ -93,21 +97,33 @@ class Master_controller(threading.Thread):
 
             # 驱动电机
             if self.hall_1_counter < hall_1_target:
+                cur_time = time.time()
+                if(self.motor_1_direction == 2 and cur_time - time_1 < 1):
+                    time.sleep(1)
                 motor.Go_1()
                 self.motor_1_direction = 1
                 print("In Master_controller main loop, motor.Go_1")
 
             if self.hall_1_counter > hall_1_target:
+                cur_time = time.time()
+                if (self.motor_1_direction == 1 and cur_time - time_1 < 1):
+                    time.sleep(1)
                 motor.Back_1()
                 self.motor_1_direction = 2
                 print("In Master_controller main loop, motor.Back_1")
 
             if self.hall_2_counter < hall_2_target:
+                cur_time = time.time()
+                if (self.motor_2_direction == 2 and cur_time - time_2 < 1):
+                    time.sleep(1)
                 motor.Go_2()
                 self.motor_2_direction = 1
                 print("In Master_controller main loop, motor.Go_2")
 
             if self.hall_2_counter > hall_2_target:
+                cur_time = time.time()
+                if (self.motor_2_direction == 1 and cur_time - time_2 < 1):
+                    time.sleep(1)
                 motor.Back_2()
                 self.motor_2_direction = 2
                 print("In Master_controller main loop, motor.Back_2")
@@ -115,6 +131,7 @@ class Master_controller(threading.Thread):
             if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
                 self.motor_1_direction = 0
+                time_1 = time.time()
                 print("In Master_controller main loop, motor.Stop_1")
                 print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ",
                       int(hall_1_target))
@@ -122,6 +139,7 @@ class Master_controller(threading.Thread):
             if self.my_equal(self.hall_2_counter, hall_2_target):
                 motor.Stop_2()
                 self.motor_2_direction = 0
+                time_2 = time.time()
                 print("In Master_controller main loop, motor.Stop_2")
                 print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
                       int(hall_2_target))
