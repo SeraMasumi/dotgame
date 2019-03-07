@@ -6,11 +6,11 @@ import io
 
 
 class AD_reader(threading.Thread):
-    def __init__(self):
+    def __init__(self, AD_joystick_x_queue, AD_joystick_y_queue):
         threading.Thread.__init__(self)
         self.AD_tablet_value = -1
-        self.AD_joystick_x_queue = queue.Queue()
-        self.AD_joystick_y_queue = queue.Queue()
+        self.AD_joystick_x_queue = AD_joystick_x_queue
+        self.AD_joystick_y_queue = AD_joystick_y_queue
 
     def run(self):
         err_buf = io.BytesIO()
@@ -85,6 +85,5 @@ class AD_reader(threading.Thread):
         bigNumber = int(bigNumStr)
         voltage = float(voltStr)
         smallNumber = int(smallNumStr)
-        print(str(number) + "=" + code + ",   " + str(bigNumber) + " ( " + str(voltage) + " " + str(
-            smallNumber) + " V) \n")
+        # print(str(number) + "=" + code + ",   " + str(bigNumber) + " ( " + str(voltage) + " " + str(smallNumber) + " V) \n")
         return number, code, bigNumber, voltage, smallNumber
