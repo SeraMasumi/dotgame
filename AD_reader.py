@@ -92,6 +92,5 @@ class AD_reader(threading.Thread):
     def myPut(self, queue, element):
         QSIZE = 2
         if(queue.qsize() >= QSIZE):
-            while(queue.qsize() >= QSIZE):
-                queue.get()
+            queue.queue.clear()
         queue.put(element)

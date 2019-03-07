@@ -98,35 +98,31 @@ class Master_controller(threading.Thread):
             # 驱动电机
             if self.hall_1_counter < hall_1_target:
                 cur_time = time.time()
-                if(self.motor_1_direction == 2 and cur_time - time_1 < 1):
-                    time.sleep(1)
-                motor.Go_1()
-                self.motor_1_direction = 1
-                print("In Master_controller main loop, motor.Go_1")
+                if not (self.motor_1_direction == 2 and cur_time - time_1 < 1):
+                    motor.Go_1()
+                    self.motor_1_direction = 1
+                    print("In Master_controller main loop, motor.Go_1")
 
             if self.hall_1_counter > hall_1_target:
                 cur_time = time.time()
-                if (self.motor_1_direction == 1 and cur_time - time_1 < 1):
-                    time.sleep(1)
-                motor.Back_1()
-                self.motor_1_direction = 2
-                print("In Master_controller main loop, motor.Back_1")
+                if not (self.motor_1_direction == 1 and cur_time - time_1 < 1):
+                    motor.Back_1()
+                    self.motor_1_direction = 2
+                    print("In Master_controller main loop, motor.Back_1")
 
             if self.hall_2_counter < hall_2_target:
                 cur_time = time.time()
-                if (self.motor_2_direction == 2 and cur_time - time_2 < 1):
-                    time.sleep(1)
-                motor.Go_2()
-                self.motor_2_direction = 1
-                print("In Master_controller main loop, motor.Go_2")
+                if not (self.motor_2_direction == 2 and cur_time - time_2 < 1):
+                    motor.Go_2()
+                    self.motor_2_direction = 1
+                    print("In Master_controller main loop, motor.Go_2")
 
             if self.hall_2_counter > hall_2_target:
                 cur_time = time.time()
-                if (self.motor_2_direction == 1 and cur_time - time_2 < 1):
-                    time.sleep(1)
-                motor.Back_2()
-                self.motor_2_direction = 2
-                print("In Master_controller main loop, motor.Back_2")
+                if not (self.motor_2_direction == 1 and cur_time - time_2 < 1):
+                    motor.Back_2()
+                    self.motor_2_direction = 2
+                    print("In Master_controller main loop, motor.Back_2")
 
             if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
@@ -143,11 +139,6 @@ class Master_controller(threading.Thread):
                 print("In Master_controller main loop, motor.Stop_2")
                 print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
                       int(hall_2_target))
-            # else:
-            #     motor.Stop_1()
-            #     print("queue empty, motor.Stop_1")
-            #     motor.Stop_2()
-            #     print("queue empty, motor.Stop_2")
 
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
