@@ -159,7 +159,7 @@ class Master_controller(threading.Thread):
     # 留有余量的比较
     def my_equal(self, a, b):
         global EQUAL_BUFFER
-        if (a - b) < EQUAL_BUFFER or (a - b) > -self.EQUAL_BUFFER:
+        if (a - b) < self.EQUAL_BUFFER or (a - b) > -self.EQUAL_BUFFER:
             return True
         else:
             return False
