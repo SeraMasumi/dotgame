@@ -86,8 +86,11 @@ class Master_controller(threading.Thread):
                         JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
                 hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
                         JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
-                print("In Master_controller main loop, hall_1_target = ", hall_1_target, ", hall_2_target = ",
+                print("In Master_controller, hall_1_target = ", hall_1_target, ", hall_2_target = ",
                       hall_2_target)
+                print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
+                      self.hall_2_counter)
+
 
                 # 驱动电机
                 if self.hall_1_counter < hall_1_target:
