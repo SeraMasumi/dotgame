@@ -33,12 +33,12 @@ class test_hall(threading.Thread):
         while True:
             if self.hall_1_counter > 1000:
                 motor.Stop_1()
+                print("reached 1000.")
 
     # 霍尔开关线程
     def hall_1_callback(self, channel1):
         if GPIO.event_detected(self.HALL_1_PIN):
             self.hall_1_counter = self.hall_1_counter + 1
-            print("hall signal detected, hall_1_counter + 1.")
 
 runner = test_hall()
 runner.run()
