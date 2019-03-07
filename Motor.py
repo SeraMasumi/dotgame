@@ -42,7 +42,7 @@ class Motor():
         self.OUT_4.start(0)
 
         self.frequency = 0.01
-        self.duty = 10
+        self.duty = 30
 
     def Setting(self, frequency, duty):
         self.frequency = frequency
