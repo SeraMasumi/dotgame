@@ -152,15 +152,19 @@ class Master_controller(threading.Thread):
         if GPIO.event_detected(self.HALL_1_PIN):
             if self.motor_1_direction == 1:
                 self.hall_1_counter = self.hall_1_counter + 1
+                print("hall signal detected, hall_1_counter + 1.")
             elif self.motor_1_direction == 2:
                 self.hall_1_counter = self.hall_1_counter - 1
+                print("hall signal detected, hall_1_counter - 1.")
 
     def hall_2_callback(self, channel2):
         if GPIO.event_detected(self.HALL_2_PIN):
             if self.motor_2_direction == 1:
                 self.hall_2_counter = self.hall_2_counter + 1
+                print("hall signal detected, hall_2_counter + 1.")
             elif self.motor_2_direction == 2:
                 self.hall_2_counter = self.hall_2_counter - 1
+                print("hall signal detected, hall_2_counter - 1.")
 
     # 留有余量的比较
     def my_equal(self, a, b):
