@@ -91,45 +91,45 @@ class Master_controller(threading.Thread):
                       self.hall_2_counter)
 
 
-                # 驱动电机
-                if self.hall_1_counter < hall_1_target:
-                    motor.Go_1()
-                    self.motor_1_direction = 1
-                    print("In Master_controller main loop, motor.Go_1")
+            # 驱动电机
+            if self.hall_1_counter < hall_1_target:m
+                motor.Go_1()
+                self.motor_1_direction = 1
+                print("In Master_controller main loop, motor.Go_1")
 
-                if self.hall_1_counter > hall_1_target:
-                    motor.Back_1()
-                    self.motor_1_direction = 2
-                    print("In Master_controller main loop, motor.Back_1")
+            if self.hall_1_counter > hall_1_target:
+                motor.Back_1()
+                self.motor_1_direction = 2
+                print("In Master_controller main loop, motor.Back_1")
 
-                if self.hall_2_counter < hall_2_target:
-                    motor.Go_2()
-                    self.motor_2_direction = 1
-                    print("In Master_controller main loop, motor.Go_2")
+            if self.hall_2_counter < hall_2_target:
+                motor.Go_2()
+                self.motor_2_direction = 1
+                print("In Master_controller main loop, motor.Go_2")
 
-                if self.hall_2_counter > hall_2_target:
-                    motor.Back_2()
-                    self.motor_2_direction = 2
-                    print("In Master_controller main loop, motor.Back_2")
+            if self.hall_2_counter > hall_2_target:
+                motor.Back_2()
+                self.motor_2_direction = 2
+                print("In Master_controller main loop, motor.Back_2")
 
-                if self.my_equal(self.hall_1_counter, hall_1_target):
-                    motor.Stop_1()
-                    self.motor_1_direction = 0
-                    print("In Master_controller main loop, motor.Stop_1")
-                    print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ",
-                          hall_1_target)
-
-                if self.my_equal(self.hall_2_counter, hall_2_target):
-                    motor.Stop_2()
-                    self.motor_2_direction = 0
-                    print("In Master_controller main loop, motor.Stop_2")
-                    print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
-                          hall_2_target)
-            else:
+            if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
-                print("queue empty, motor.Stop_1")
+                self.motor_1_direction = 0
+                print("In Master_controller main loop, motor.Stop_1")
+                print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ",
+                      int(hall_1_target))
+
+            if self.my_equal(self.hall_2_counter, hall_2_target):
                 motor.Stop_2()
-                print("queue empty, motor.Stop_2")
+                self.motor_2_direction = 0
+                print("In Master_controller main loop, motor.Stop_2")
+                print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ",
+                      int(hall_2_target))
+            # else:
+            #     motor.Stop_1()
+            #     print("queue empty, motor.Stop_1")
+            #     motor.Stop_2()
+            #     print("queue empty, motor.Stop_2")
 
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
