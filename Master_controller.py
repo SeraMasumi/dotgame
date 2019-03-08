@@ -96,28 +96,28 @@ class Master_controller(threading.Thread):
 
 
             # 驱动电机
-            if self.hall_1_counter < (hall_1_target - 3):
+            if self.hall_1_counter < (hall_1_target - 1):
                 cur_time = time.time()
                 if not (self.motor_1_direction == 2 and cur_time - time_1 < 1):
                     motor.Go_1()
                     self.motor_1_direction = 1
                     # print("In Master_controller main loop, motor.Go_1")
 
-            if self.hall_1_counter > (hall_1_target + 3):
+            if self.hall_1_counter > (hall_1_target + 1):
                 cur_time = time.time()
                 if not (self.motor_1_direction == 1 and cur_time - time_1 < 1):
                     motor.Back_1()
                     self.motor_1_direction = 2
                     # print("In Master_controller main loop, motor.Back_1")
 
-            if self.hall_2_counter < (hall_2_target - 3):
+            if self.hall_2_counter < (hall_2_target - 1):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 2 and cur_time - time_2 < 1):
                     motor.Go_2()
                     self.motor_2_direction = 1
                     # print("In Master_controller main loop, motor.Go_2")
 
-            if self.hall_2_counter > (hall_2_target + 3):
+            if self.hall_2_counter > (hall_2_target + 1):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 1 and cur_time - time_2 < 1):
                     motor.Back_2()
@@ -190,7 +190,7 @@ class Master_controller(threading.Thread):
 
     # 留有余量的比较
     def my_equal(self, a, b):
-        EQUAL_BUFFER = 3
+        EQUAL_BUFFER = 1
         if abs(a - b) < EQUAL_BUFFER:
             return True
         else:
