@@ -90,7 +90,7 @@ class Game_controller(threading.Thread):
         master_controller.start()
         print("Master_controller started.")
 
-        '''
+
         # 游戏主循环
         while running:
             # 监听用户事件
@@ -152,7 +152,7 @@ class Game_controller(threading.Thread):
             # 更新clock和刷新屏幕
             dt = clock.tick()
             pygame.display.update()
-        '''
+
 
 runner = Game_controller()
 runner.run()

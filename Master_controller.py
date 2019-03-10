@@ -141,7 +141,7 @@ class Master_controller(threading.Thread):
                     time_2 = time.time()
                 # print("In Master_controller main loop, motor.Stop_2")
                 # print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ", int(hall_2_target))
-            '''
+
             # 平板坐标 --> 游戏显示
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
                 temp_x = int(display_x_queue.get() * PYGAME_RESOLUTION_X)
@@ -157,7 +157,7 @@ class Master_controller(threading.Thread):
                 else:
                     self.game_y_queue.get()
                     self.game_y_queue.put(temp_x)
-            '''
+
 
     # 霍尔开关线程
     def hall_1_callback(self, channel1):

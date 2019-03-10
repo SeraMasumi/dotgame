@@ -24,10 +24,8 @@ class AD_controller(threading.Thread):
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.chan_list_out, GPIO.OUT)
-        '''
-        GPIO.setup(self.chan_list_in, GPIO.IN)
-        '''
 
+        # GPIO.setup(self.chan_list_in, GPIO.IN)
 
     def measure_x(self):
         GPIO.output(33, GPIO.LOW)
@@ -69,7 +67,7 @@ class AD_controller(threading.Thread):
         input_y_value_tablet = 0
         input_x_value_joystick = 0
         input_y_value_joystick = 0
-        '''
+
         while True:
             
             # 测量平板xy
@@ -89,7 +87,6 @@ class AD_controller(threading.Thread):
             # print("in AD_controller, ratio_x put in queue. display ratio_x = ", self.ratio_x)
             self.display_y_queue.put(self.ratio_y)
             # print("in AD_controller, ratio_y put in queue. display ratio_y = ", self.ratio_y)
-            '''
 
             # print("in AD_controller, joystick_x_queue size = ", self.joystick_x_queue.qsize())
             # print("in AD_controller, joystick_y_queue size = ", self.joystick_y_queue.qsize())
