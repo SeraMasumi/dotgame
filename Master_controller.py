@@ -146,17 +146,9 @@ class Master_controller(threading.Thread):
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
                 temp_x = int(display_x_queue.get() * PYGAME_RESOLUTION_X)
                 temp_y = int(display_y_queue.get() * PYGAME_RESOLUTION_Y)
-                # print("in display loop")
-                if self.game_x_queue.empty():
-                    self.game_x_queue.put(temp_x)
-                else:
-                    self.game_x_queue.get()
-                    self.game_x_queue.put(temp_x)
-                if self.game_y_queue.empty():
-                    self.game_y_queue.put(temp_y)
-                else:
-                    self.game_y_queue.get()
-                    self.game_y_queue.put(temp_x)
+                print("in display loop, put x = ", temp_x, " put y = ", temp_y)
+                self.game_x_queue.myPut_size1(temp_x)
+                self.game_y_queue.myPut_size1(temp_y)
 
 
     # 霍尔开关线程
@@ -195,3 +187,9 @@ class Master_controller(threading.Thread):
             return True
         else:
             return False
+
+    def myPut_size1(self, queue, element):
+        QSIZE = 1
+        if(queue.qsize() >= QSIZE):
+            queue.queue.clear()
+        queue.put(element)

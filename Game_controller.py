@@ -10,8 +10,8 @@ import queue
 class Game_controller(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
-        self.input_x_queue = queue.Queue(1)
-        self.input_y_queue = queue.Queue(1)
+        self.input_x_queue = queue.Queue()
+        self.input_y_queue = queue.Queue()
 
     # def display(self, x, y):
     #     self.input_x = x  # 传来的动点

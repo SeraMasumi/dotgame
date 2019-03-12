@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import RPi.GPIO as GPIO
+import time
 import threading
 import queue
 import AD_reader
@@ -74,25 +75,31 @@ class AD_controller(threading.Thread):
             # 测量平板xy
             AD_controller.all_close(self)
             AD_controller.measure_x(self)
+            time.sleep(0.1)
 
             if(not self.AD_tablet_queue.empty()):
                 input_x_value_tablet = self.AD_tablet_queue.get()
                 print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+                self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
+                self.display_x_queue.put(self.ratio_x)
 
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
+            time.sleep(0.1)
 
             if(not self.AD_tablet_queue.empty()):
                 input_y_value_tablet = self.AD_tablet_queue.get()
                 print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
+                self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
+                self.display_y_queue.put(self.ratio_y)
 
             # 计算要显示的xy坐标
-            self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
-            self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
+            # self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
+            # self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
 
-            self.display_x_queue.put(self.ratio_x)
+            # self.display_x_queue.put(self.ratio_x)
             # print("in AD_controller, ratio_x put in queue. display ratio_x = ", self.ratio_x)
-            self.display_y_queue.put(self.ratio_y)
+            # self.display_y_queue.put(self.ratio_y)
             # print("in AD_controller, ratio_y put in queue. display ratio_y = ", self.ratio_y)
 
             # print("in AD_controller, joystick_x_queue size = ", self.joystick_x_queue.qsize())
