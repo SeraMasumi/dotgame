@@ -79,9 +79,10 @@ class AD_controller(threading.Thread):
 
             if(not self.AD_tablet_queue.empty()):
                 input_x_value_tablet = self.AD_tablet_queue.get()
-                print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+                # print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
                 self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
                 self.display_x_queue.put(self.ratio_x)
+                print("put in display_x_queue ", self.ratio_x)
 
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
@@ -89,9 +90,10 @@ class AD_controller(threading.Thread):
 
             if(not self.AD_tablet_queue.empty()):
                 input_y_value_tablet = self.AD_tablet_queue.get()
-                print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
+                # print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
                 self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
                 self.display_y_queue.put(self.ratio_y)
+                print("put in display_y_queue ", self.ratio_y)
 
             # 计算要显示的xy坐标
             # self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
