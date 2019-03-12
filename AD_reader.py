@@ -6,9 +6,10 @@ import io
 
 
 class AD_reader(threading.Thread):
-    def __init__(self, AD_joystick_x_queue, AD_joystick_y_queue):
+    def __init__(self, AD_tablet_queue, AD_joystick_x_queue, AD_joystick_y_queue):
         threading.Thread.__init__(self)
-        self.AD_tablet_value = -1
+        # self.AD_tablet_value = -1
+        self.AD_tablet_queue = AD_tablet_queue
         self.AD_joystick_x_queue = AD_joystick_x_queue
         self.AD_joystick_y_queue = AD_joystick_y_queue
 
@@ -24,7 +25,7 @@ class AD_reader(threading.Thread):
             if lineEntry[0] == '2' or lineEntry[0] == '3' or lineEntry[0] == '4':
                 number, code, bigNumber, voltage, smallNumber = AD_reader.WorkWithValues(self, lineEntry)
                 if lineEntry[0] == '2':
-                    self.AD_tablet_value = bigNumber
+                    AD_reader.myPut_size1(self, self.AD_tablet_queue, bigNumber)
                     # print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
                     self.AD_joystick_x_queue.put(bigNumber)
@@ -91,6 +92,12 @@ class AD_reader(threading.Thread):
 
     def myPut(self, queue, element):
         QSIZE = 2
+        if(queue.qsize() >= QSIZE):
+            queue.queue.clear()
+        queue.put(element)
+
+    def myPut_size1(self, queue, element):
+        QSIZE = 1
         if(queue.qsize() >= QSIZE):
             queue.queue.clear()
         queue.put(element)

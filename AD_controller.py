@@ -20,7 +20,8 @@ class AD_controller(threading.Thread):
         self.display_y_queue = display_y_queue
         self.joystick_x_queue = joystick_x_queue
         self.joystick_y_queue = joystick_y_queue
-        self.AD_reader = AD_reader.AD_reader(self.joystick_x_queue, self.joystick_y_queue)
+        self.AD_tablet_queue = queue.Queue()
+        self.AD_reader = AD_reader.AD_reader(self.AD_tablet_queue, self.joystick_x_queue, self.joystick_y_queue)
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.chan_list_out, GPIO.OUT)
@@ -73,12 +74,17 @@ class AD_controller(threading.Thread):
             # 测量平板xy
             AD_controller.all_close(self)
             AD_controller.measure_x(self)
-            input_x_value_tablet = self.AD_reader.AD_tablet_value
-            print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+
+            if(not self.AD_tablet_queue.empty()):
+                input_x_value_tablet = self.AD_tablet_queue.get()
+                print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
+
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
-            input_y_value_tablet = self.AD_reader.AD_tablet_value
-            print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
+
+            if(not self.AD_tablet_queue.empty()):
+                input_y_value_tablet = self.AD_tablet_queue.get()
+                print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
 
             # 计算要显示的xy坐标
             self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
