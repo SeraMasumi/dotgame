@@ -90,6 +90,9 @@ class Game_controller(threading.Thread):
         master_controller.start()
         print("Master_controller started.")
 
+        drawing_x = 0
+        drawing_y = 0
+
 
         # 游戏主循环
         while running:
@@ -127,10 +130,10 @@ class Game_controller(threading.Thread):
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x2, pos_y2), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x3, pos_y3), 10, 0)
                 if (not self.input_x_queue.empty()) and (not self.input_y_queue.empty()):
-                    temp_x = self.input_x_queue.get()
-                    temp_y = self.input_y_queue.get()
-                    pygame.draw.circle(screen, (255, 255, 255), (temp_x, temp_y), 10, 0)
-                    print("draw point x = ", temp_x, ", y = ", temp_y)
+                    drawing_x = self.input_x_queue.get()
+                    drawing_y = self.input_y_queue.get()
+                pygame.draw.circle(screen, (255, 255, 255), (drawing_x, drawing_y), 10, 0)
+                print("draw point x = ", drawing_x, ", y = ", drawing_y)
 
             elif tablet_balanced:  # 游戏还没开始，显示欢迎界面
                 screen.blit(start_game_string, (start_game_click_box_x, start_game_click_box_y))
