@@ -28,25 +28,25 @@ class AD_controller(threading.Thread):
         # GPIO.setup(self.chan_list_in, GPIO.IN)
 
     def measure_x(self):
-        GPIO.output(33, GPIO.LOW)
+        GPIO.output(33, GPIO.HIGH)
         GPIO.output(35, GPIO.LOW)
-        GPIO.output(36, GPIO.HIGH)
+        GPIO.output(36, GPIO.LOW)
         GPIO.output(37, GPIO.HIGH)
         GPIO.output(38, GPIO.LOW)
         GPIO.output(40, GPIO.HIGH)
 
     def measure_y(self):
         GPIO.output(33, GPIO.LOW)
-        GPIO.output(35, GPIO.HIGH)
-        GPIO.output(36, GPIO.LOW)
-        GPIO.output(37, GPIO.HIGH)
+        GPIO.output(35, GPIO.LOW)
+        GPIO.output(36, GPIO.HIGH)
+        GPIO.output(37, GPIO.LOW)
         GPIO.output(38, GPIO.HIGH)
         GPIO.output(40, GPIO.HIGH)
 
     def all_close(self):
         GPIO.output(33, GPIO.HIGH)
         GPIO.output(35, GPIO.HIGH)
-        GPIO.output(36, GPIO.LOW)
+        GPIO.output(36, GPIO.HIGH)
         GPIO.output(37, GPIO.LOW)
         GPIO.output(38, GPIO.LOW)
         GPIO.output(40, GPIO.LOW)
@@ -71,6 +71,7 @@ class AD_controller(threading.Thread):
         while True:
             
             # 测量平板xy
+            AD_controller.all_close(self)
             AD_controller.measure_x(self)
             input_x_value_tablet = self.AD_reader.AD_tablet_value
             print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
