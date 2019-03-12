@@ -143,13 +143,13 @@ class Master_controller(threading.Thread):
                 # print("In Master_controller, hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ", int(hall_2_target))
 
             # 平板坐标 --> 游戏显示
-            print("display_x_queue size = ", display_x_queue.qsize(), " display_y_queue size = ", display_y_queue.qsize())
+            # print("display_x_queue size = ", display_x_queue.qsize(), " display_y_queue size = ", display_y_queue.qsize())
             if (not display_x_queue.empty()) and (not display_y_queue.empty()):
                 temp_x = int(display_x_queue.get() * PYGAME_RESOLUTION_X)
                 temp_y = int(display_y_queue.get() * PYGAME_RESOLUTION_Y)
                 print("in display loop, put x = ", temp_x, " put y = ", temp_y)
-                self.game_x_queue.myPut_size1(temp_x)
-                self.game_y_queue.myPut_size1(temp_y)
+                Master_controller.myPut_size1(self, self.game_x_queue, temp_x)
+                Master_controller.myPut_size1(self, self.game_y_queue, temp_y)
 
 
     # 霍尔开关线程
