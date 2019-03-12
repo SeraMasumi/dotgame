@@ -59,10 +59,10 @@ class AD_controller(threading.Thread):
         #   清零
         #   测y
         #   由电压比值计算xy坐标
-        TABLET_X_MIN = 1363000
-        TABLET_X_MAX = 4218000
-        TABLET_Y_MIN = 975000
-        TABLET_Y_MAX = 2322000
+        TABLET_X_MIN = 1360000
+        TABLET_X_MAX = 4184000
+        TABLET_Y_MIN = 1561800
+        TABLET_Y_MAX = 4208200
         input_x_value_tablet = 0
         input_y_value_tablet = 0
         input_x_value_joystick = 0
