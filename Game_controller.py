@@ -10,12 +10,7 @@ import queue
 class Game_controller(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
-        self.input_x_queue = queue.Queue()
-        self.input_y_queue = queue.Queue()
-
-    # def display(self, x, y):
-    #     self.input_x = x  # 传来的动点
-    #     self.input_y = y
+        self.game_dot_queue = queue.Queue()
 
     def run(self):
 
@@ -86,9 +81,8 @@ class Game_controller(threading.Thread):
 
         dt = 0
 
-        master_controller = Master_controller.Master_controller(self.input_x_queue, self.input_y_queue)
+        master_controller = Master_controller.Master_controller(self.game_dot_queue)
         master_controller.start()
-        print("Master_controller started.")
 
         drawing_x = 0
         drawing_y = 0
@@ -129,9 +123,10 @@ class Game_controller(threading.Thread):
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x1, pos_y1), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x2, pos_y2), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x3, pos_y3), 10, 0)
-                if (not self.input_x_queue.empty()) and (not self.input_y_queue.empty()):
-                    drawing_x = self.input_x_queue.get()
-                    drawing_y = self.input_y_queue.get()
+                if not self.game_dot_queue.empty():
+                    temp_tuple = self.game_dot_queue.get()
+                    drawing_x = int(temp_tuple[0])
+                    drawing_y = int(temp_tuple[1])
                 pygame.draw.circle(screen, (255, 255, 255), (drawing_x, drawing_y), 10, 0)
                 print("draw point x = ", drawing_x, ", y = ", drawing_y)
 

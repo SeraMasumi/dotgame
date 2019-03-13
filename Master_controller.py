@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 
 
 class Master_controller(threading.Thread):
-    def __init__(self, game_x_queue, game_y_queue):
+    def __init__(self, game_dot_queue):
         threading.Thread.__init__(self)
         self.HALL_1_PIN = 31  # 霍尔开关端口
         self.HALL_2_PIN = 32
@@ -22,24 +22,20 @@ class Master_controller(threading.Thread):
         self.hall_2_counter = 0
         self.motor_1_direction = 0  # 电机转动方向， 0--stop 1--Go 2--back
         self.motor_2_direction = 0
-        self.game_x_queue = game_x_queue
-        self.game_y_queue = game_y_queue
+        self.game_dot_queue = game_dot_queue
         self.Last_direction_x = 1
         self.Last_direction_y = 1
 
     def run(self):
 
         # producer-consumer queue for AD input for tablet and joystick
-        display_x_queue = queue.Queue()
-        display_y_queue = queue.Queue()
         joystick_x_queue = queue.Queue()
         joystick_y_queue = queue.Queue()
 
         # initialize motor, pygame and AD-read object
         motor = Motor.Motor()
         # game_controller = Game_controller.Game_controller()
-        ad_controller = AD_controller.AD_controller(display_x_queue, display_y_queue, joystick_x_queue,
-                                                    joystick_y_queue)
+        ad_controller = AD_controller.AD_controller(self.game_dot_queue, joystick_x_queue, joystick_y_queue)
 
         # 注册GPIO: 电机-2-OUT，霍尔开关-2-IN，平板-2-OUT
         GPIO.setup(self.HALL_1_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -47,16 +43,9 @@ class Master_controller(threading.Thread):
 
         GPIO.add_event_detect(self.HALL_1_PIN, GPIO.RISING, callback=self.hall_1_callback)  # 会为回调函数另外开启一个线程，与主程序并发运行
         GPIO.add_event_detect(self.HALL_2_PIN, GPIO.RISING, callback=self.hall_2_callback)
-        print("Two Hall thread started")
 
-        # 启动游戏显示和平板测坐标线程
-        # game_controller.start()
-        # print("game_controller thread started")
         ad_controller.start()
-        print("AD_controller thread started")
 
-        # global hall_1_counter
-        # global hall_2_counter
         hall_1_target = self.hall_1_counter
         hall_2_target = self.hall_2_counter
         HALL_1_MAX = 100
@@ -144,12 +133,13 @@ class Master_controller(threading.Thread):
 
             # 平板坐标 --> 游戏显示
             # print("display_x_queue size = ", display_x_queue.qsize(), " display_y_queue size = ", display_y_queue.qsize())
-            if (not display_x_queue.empty()) and (not display_y_queue.empty()):
-                temp_x = int(display_x_queue.get() * PYGAME_RESOLUTION_X)
-                temp_y = int(display_y_queue.get() * PYGAME_RESOLUTION_Y)
-                print("in display loop, put x = ", temp_x, " put y = ", temp_y)
-                Master_controller.myPut_size1(self, self.game_x_queue, temp_x)
-                Master_controller.myPut_size1(self, self.game_y_queue, temp_y)
+            # if not display_queue.empty():
+            #     temp_tuple = display_queue.get()
+            #     temp_x = int(temp_tuple[0])
+            #     temp_y = int(temp_tuple[1])
+            #     print("in display loop, put x = ", temp_x, " put y = ", temp_y)
+            #     Master_controller.myPut_size1(self, self.game_x_queue, temp_x)
+            #     Master_controller.myPut_size1(self, self.game_y_queue, temp_y)
 
 
     # 霍尔开关线程
@@ -188,9 +178,3 @@ class Master_controller(threading.Thread):
             return True
         else:
             return False
-
-    def myPut_size1(self, queue, element):
-        QSIZE = 1
-        if(queue.qsize() >= QSIZE):
-            queue.queue.clear()
-        queue.put(element)
