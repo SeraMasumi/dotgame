@@ -28,7 +28,7 @@ class AD_reader(threading.Thread):
                     AD_reader.myPut_size1(self, self.AD_tablet_queue, bigNumber)
                     # print("in AD_reader, AD_tablet_value = ", self.AD_tablet_value)
                 elif lineEntry[0] == '3':
-                    self.AD_joystick_x_queue.put(bigNumber)
+                    # self.AD_joystick_x_queue.put(bigNumber)
                     AD_reader.myPut(self, self.AD_joystick_x_queue, bigNumber)
                     # print("in AD_reader, AD_joystick_x_queue size = ", self.AD_joystick_x_queue.qsize())
                 elif lineEntry[0] == '4':

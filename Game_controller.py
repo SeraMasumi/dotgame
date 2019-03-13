@@ -127,8 +127,9 @@ class Game_controller(threading.Thread):
                     temp_tuple = self.game_dot_queue.get()
                     drawing_x = int(temp_tuple[0])
                     drawing_y = int(temp_tuple[1])
+                    print("drawing_x = ", drawing_x, ", drawing_y = ", drawing_y)
                 pygame.draw.circle(screen, (255, 255, 255), (drawing_x, drawing_y), 10, 0)
-                print("draw point x = ", drawing_x, ", y = ", drawing_y)
+                # print("draw point x = ", drawing_x, ", y = ", drawing_y)
 
             elif tablet_balanced:  # 游戏还没开始，显示欢迎界面
                 screen.blit(start_game_string, (start_game_click_box_x, start_game_click_box_y))
