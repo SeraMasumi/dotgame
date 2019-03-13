@@ -75,7 +75,7 @@ class AD_controller(threading.Thread):
             if(not self.AD_reader_queue.empty()):
                 input_x_value_tablet = self.AD_reader_queue.get()
                 # print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
-                self.coordinate_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN) * PYGAME_RESOLUTION_X
+                self.coordinate_x = PYGAME_RESOLUTION_X - (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN) * PYGAME_RESOLUTION_X
 
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
