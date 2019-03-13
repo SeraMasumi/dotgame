@@ -31,7 +31,7 @@ class Game_controller(threading.Thread):
         click_box_h = 20
 
         # 初始化游戏状态
-        game_started = False
+        game_started = True # TODO: 测试用，之后改回去
         running = True
         tablet_balanced = False
 
@@ -120,14 +120,16 @@ class Game_controller(threading.Thread):
 
             if game_started:  # 游戏已经开始
                 # 画点
+                '''
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x1, pos_y1), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x2, pos_y2), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x3, pos_y3), 10, 0)
+                '''
                 if not self.game_dot_queue.empty():
                     temp_tuple = self.game_dot_queue.get()
                     drawing_x = int(temp_tuple[0])
                     drawing_y = int(temp_tuple[1])
-                    print("drawing_x = ", drawing_x, ", drawing_y = ", drawing_y)
+                    # print("drawing_x = ", drawing_x, ", drawing_y = ", drawing_y)
                 pygame.draw.circle(screen, (255, 255, 255), (drawing_x, drawing_y), 10, 0)
                 # print("draw point x = ", drawing_x, ", y = ", drawing_y)
 

@@ -80,7 +80,7 @@ class AD_controller(threading.Thread):
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
             time.sleep(0.5)
-            print("before calc y, input_x_value_tablet = ", input_x_value_tablet, "AD_reader_queue size = ", self.AD_reader_queue.qsize())
+            # print("before calc y, input_x_value_tablet = ", input_x_value_tablet, "AD_reader_queue size = ", self.AD_reader_queue.qsize())
 
             if(input_x_value_tablet != -1 and (not self.AD_reader_queue.empty())):
                 input_y_value_tablet = self.AD_reader_queue.get()
@@ -88,7 +88,7 @@ class AD_controller(threading.Thread):
                 self.coordinate_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN) * PYGAME_RESOLUTION_Y
                 # self.display_queue.put((self.ratio_x, self.ratio_y))
                 AD_controller.myPut_size1(self, self.display_queue, (self.coordinate_x, self.coordinate_y))
-                print("after put, ratio_x = ", self.coordinate_x, " ratio_y = ", self.coordinate_y)
+                # print("after put, ratio_x = ", self.coordinate_x, " ratio_y = ", self.coordinate_y)
 
     def myPut_size1(self, queue, element):
         QSIZE = 1
