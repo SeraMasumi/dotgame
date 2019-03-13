@@ -15,8 +15,8 @@ class AD_controller(threading.Thread):
         threading.Thread.__init__(self)
         self.chan_list_out = [33, 35, 36, 37, 38, 40]
         self.chan_list_in = [2, 3, 4]
-        self.ratio_x = 0
-        self.ratio_y = 0
+        self.coordinate_x = 0
+        self.coordinate_y = 0
         self.display_queue = display_queue
         self.joystick_x_queue = joystick_x_queue
         self.joystick_y_queue = joystick_y_queue
@@ -59,6 +59,8 @@ class AD_controller(threading.Thread):
         TABLET_X_MAX = 4184000
         TABLET_Y_MIN = 1561800
         TABLET_Y_MAX = 4208200
+        PYGAME_RESOLUTION_X = 1024
+        PYGAME_RESOLUTION_Y = 768
 
         while True:
 
@@ -68,25 +70,25 @@ class AD_controller(threading.Thread):
             # 测量平板xy
             AD_controller.all_close(self)
             AD_controller.measure_x(self)
-            time.sleep(0.1)
+            time.sleep(0.5)
 
             if(not self.AD_reader_queue.empty()):
                 input_x_value_tablet = self.AD_reader_queue.get()
                 # print("in AD_controller, get input_x_value_tablet = ", input_x_value_tablet)
-                self.ratio_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN)
+                self.coordinate_x = (TABLET_X_MAX - input_x_value_tablet) / (TABLET_X_MAX - TABLET_X_MIN) * PYGAME_RESOLUTION_X
 
             AD_controller.all_close(self)
             AD_controller.measure_y(self)
-            time.sleep(0.1)
+            time.sleep(0.5)
             print("before calc y, input_x_value_tablet = ", input_x_value_tablet, "AD_reader_queue size = ", self.AD_reader_queue.qsize())
 
             if(input_x_value_tablet != -1 and (not self.AD_reader_queue.empty())):
                 input_y_value_tablet = self.AD_reader_queue.get()
                 # print("in AD_controller, get input_y_value_tablet = ", input_y_value_tablet)
-                self.ratio_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN)
+                self.coordinate_y = (TABLET_Y_MAX - input_y_value_tablet) / (TABLET_Y_MAX - TABLET_Y_MIN) * PYGAME_RESOLUTION_Y
                 # self.display_queue.put((self.ratio_x, self.ratio_y))
-                AD_controller.myPut_size1(self, self.display_queue, (self.ratio_x, self.ratio_y))
-                print("after put, ratio_x = ", self.ratio_x, " ratio_y = ", self.ratio_y)
+                AD_controller.myPut_size1(self, self.display_queue, (self.coordinate_x, self.coordinate_y))
+                print("after put, ratio_x = ", self.coordinate_x, " ratio_y = ", self.coordinate_y)
 
     def myPut_size1(self, queue, element):
         QSIZE = 1

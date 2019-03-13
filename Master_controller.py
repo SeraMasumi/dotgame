@@ -58,8 +58,6 @@ class Master_controller(threading.Thread):
         JOYSTICK_Y_MID = 4397000
         joystick_x = 0
         joystick_y = 0
-        PYGAME_RESOLUTION_X = 1024
-        PYGAME_RESOLUTION_Y = 768
 
         time_1 = time.time()
         time_2 = time.time()
