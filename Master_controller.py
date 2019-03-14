@@ -53,8 +53,8 @@ class Master_controller(threading.Thread):
 
         self.hall_1_target = self.hall_1_counter
         self.hall_2_target = self.hall_2_counter
-        HALL_1_MAX = 100
-        HALL_2_MAX = 100
+        HALL_1_MAX = 50
+        HALL_2_MAX = 50
         JOYSTICK_X_MAX = 8388607
         JOYSTICK_X_MIN = 28500
         JOYSTICK_Y_MAX = 8388607
@@ -86,33 +86,33 @@ class Master_controller(threading.Thread):
             print("jx=", joystick_x, " jy=", joystick_y, " h1t=", int(self.hall_1_target), "h2t=", int(self.hall_2_target), "h1c=", self.hall_1_counter, "h2c=", self.hall_2_counter)
 
             # 驱动电机
-            if self.hall_1_counter < (self.hall_1_target - 1):
-                cur_time = time.time()
-                if not (self.motor_1_direction == 2 and cur_time - self.time_1 < 1):
-                    self.motor.Go_1()
-                    self.motor_1_direction = 1
-                    print("Go_1", " h1t=", self.hall_1_target, " h1c=", self.hall_1_counter)
+            # if self.hall_1_counter < (self.hall_1_target - 1):
+            #     cur_time = time.time()
+            #     if not (self.motor_1_direction == 2 and cur_time - self.time_1 < 1):
+            #         self.motor.Go_1()
+            #         self.motor_1_direction = 1
+            #         print("Go_1", " h1t=", self.hall_1_target, " h1c=", self.hall_1_counter)
+            #
+            # if self.hall_1_counter > (self.hall_1_target + 1):
+            #     cur_time = time.time()
+            #     if not (self.motor_1_direction == 1 and cur_time - self.time_1 < 1):
+            #         self.motor.Back_1()
+            #         self.motor_1_direction = 2
+            #         print("Back_1", " h1t=", self.hall_1_target, " h1c=", self.hall_1_counter)
 
-            if self.hall_1_counter > (self.hall_1_target + 1):
-                cur_time = time.time()
-                if not (self.motor_1_direction == 1 and cur_time - self.time_1 < 1):
-                    self.motor.Back_1()
-                    self.motor_1_direction = 2
-                    print("Back_1", " h1t=", self.hall_1_target, " h1c=", self.hall_1_counter)
-
-            if self.hall_2_counter < (self.hall_2_target - 1):
-                cur_time = time.time()
-                if not (self.motor_2_direction == 2 and cur_time - self.time_2 < 1):
-                    self.motor.Go_2()
-                    self.motor_2_direction = 1
-                    print("Go_2", " h2t=", self.hall_2_target, " h2c=", self.hall_2_counter)
-
-            if self.hall_2_counter > (self.hall_2_target + 1):
-                cur_time = time.time()
-                if not (self.motor_2_direction == 1 and cur_time - self.time_2 < 1):
-                    self.motor.Back_2()
-                    self.motor_2_direction = 2
-                    print("Back_2", " h2t=", self.hall_2_target, " h2c=", self.hall_2_counter)
+            # if self.hall_2_counter < (self.hall_2_target - 1):
+            #     cur_time = time.time()
+            #     if not (self.motor_2_direction == 2 and cur_time - self.time_2 < 1):
+            #         self.motor.Go_2()
+            #         self.motor_2_direction = 1
+            #         print("Go_2", " h2t=", self.hall_2_target, " h2c=", self.hall_2_counter)
+            #
+            # if self.hall_2_counter > (self.hall_2_target + 1):
+            #     cur_time = time.time()
+            #     if not (self.motor_2_direction == 1 and cur_time - self.time_2 < 1):
+            #         self.motor.Back_2()
+            #         self.motor_2_direction = 2
+            #         print("Back_2", " h2t=", self.hall_2_target, " h2c=", self.hall_2_counter)
 
             # if self.my_equal(self.hall_1_counter, self.hall_1_target):
             #     motor.Stop_1()
@@ -150,6 +150,18 @@ class Master_controller(threading.Thread):
                 elif (self.Last_direction_x == 2):
                     self.hall_1_counter = self.hall_1_counter - 1
 
+            if self.hall_1_counter < (self.hall_1_target - 1):
+                cur_time = time.time()
+                if not (self.motor_1_direction == 2 and cur_time - self.time_1 < 1):
+                    self.motor.Go_1()
+                    self.motor_1_direction = 1
+
+            if self.hall_1_counter > (self.hall_1_target + 1):
+                cur_time = time.time()
+                if not (self.motor_1_direction == 1 and cur_time - self.time_1 < 1):
+                    self.motor.Back_1()
+                    self.motor_1_direction = 2
+
             if self.my_equal(self.hall_1_counter, self.hall_1_target):
                 self.motor.Stop_1()
                 if (self.motor_1_direction != 0):
@@ -172,6 +184,18 @@ class Master_controller(threading.Thread):
                     self.hall_2_counter = self.hall_2_counter + 1
                 elif (self.Last_direction_y == 2):
                     self.hall_2_counter = self.hall_2_counter - 1
+
+            if self.hall_2_counter < (self.hall_2_target - 1):
+                cur_time = time.time()
+                if not (self.motor_2_direction == 2 and cur_time - self.time_2 < 1):
+                    self.motor.Go_2()
+                    self.motor_2_direction = 1
+
+            if self.hall_2_counter > (self.hall_2_target + 1):
+                cur_time = time.time()
+                if not (self.motor_2_direction == 1 and cur_time - self.time_2 < 1):
+                    self.motor.Back_2()
+                    self.motor_2_direction = 2
 
             if self.my_equal(self.hall_2_counter, self.hall_2_target):
                 self.motor.Stop_2()
