@@ -26,7 +26,7 @@ class AD_reader(threading.Thread):
                 number, code, bigNumber, voltage, smallNumber = AD_reader.WorkWithValues(self, lineEntry)
                 if lineEntry[0] == '2':
                     AD_reader.myPut_size1(self, self.AD_tablet_queue, bigNumber)
-                    print("in AD_reader, bigNumber = ", bigNumber)
+                    # print("in AD_reader, bigNumber = ", bigNumber)
                 elif lineEntry[0] == '3':
                     # self.AD_joystick_x_queue.put(bigNumber)
                     AD_reader.myPut(self, self.AD_joystick_x_queue, bigNumber)
