@@ -71,19 +71,18 @@ class Master_controller(threading.Thread):
 
             if (not joystick_x_queue.empty()) and (not joystick_y_queue.empty()):
                 joystick_x = joystick_x_queue.get()
-                print("joystick_x = ", joystick_x)
+                # print("joystick_x = ", joystick_x)
                 joystick_y = joystick_y_queue.get()
-                print("joystick_y = ", joystick_y)
+                # print("joystick_y = ", joystick_y)
 
                 # 计算所需脉冲值
                 hall_1_target = (joystick_x - JOYSTICK_X_MIN - JOYSTICK_X_MID) / (
                         JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
                 hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
                         JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
-                print("In Master_controller, hall_1_target = ", int(hall_1_target), ", hall_2_target = ",
-                      int(hall_2_target))
-                print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ",
-                      self.hall_2_counter)
+                # print("In Master_controller, hall_1_target = ", int(hall_1_target), ", hall_2_target = ", int(hall_2_target))
+                # print("In Master_controller, hall_1_counter = ", self.hall_1_counter, ", hall_2_counter = ", self.hall_2_counter)
+                print("jx=", joystick_x, " jy=", joystick_y, " h1t=", int(hall_1_target), "h2t=", int(hall_2_target), "h1c=", self.hall_1_counter, "h2c=", self.hall_2_counter)
 
             # 驱动电机
             if self.hall_1_counter < (hall_1_target - 1):
@@ -91,28 +90,28 @@ class Master_controller(threading.Thread):
                 if not (self.motor_1_direction == 2 and cur_time - time_1 < 1):
                     motor.Go_1()
                     self.motor_1_direction = 1
-                    print("motor.Go_1")
+                    print("Go_1")
 
             if self.hall_1_counter > (hall_1_target + 1):
                 cur_time = time.time()
                 if not (self.motor_1_direction == 1 and cur_time - time_1 < 1):
                     motor.Back_1()
                     self.motor_1_direction = 2
-                    print("motor.Back_1")
+                    print("Back_1")
 
             if self.hall_2_counter < (hall_2_target - 1):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 2 and cur_time - time_2 < 1):
                     motor.Go_2()
                     self.motor_2_direction = 1
-                    print("motor.Go_2")
+                    print("Go_2")
 
             if self.hall_2_counter > (hall_2_target + 1):
                 cur_time = time.time()
                 if not (self.motor_2_direction == 1 and cur_time - time_2 < 1):
                     motor.Back_2()
                     self.motor_2_direction = 2
-                    print("motor.Back_2")
+                    print("Back_2")
 
             if self.my_equal(self.hall_1_counter, hall_1_target):
                 motor.Stop_1()
@@ -120,8 +119,8 @@ class Master_controller(threading.Thread):
                     self.Last_direction_x = self.motor_1_direction
                     self.motor_1_direction = 0
                     time_1 = time.time()
-                print("motor.Stop_1, counter reached target, ", "hall_1_counter = ", self.hall_1_counter,
-                      ", hall_1_target = ", int(hall_1_target))
+                # print("motor.Stop_1, counter reached target, ", "hall_1_counter = ", self.hall_1_counter, ", hall_1_target = ", int(hall_1_target))
+                print("Stop_1 ", "h1c=", self.hall_1_counter, " h1t=", int(hall_1_target))
 
             if self.my_equal(self.hall_2_counter, hall_2_target):
                 motor.Stop_2()
@@ -129,11 +128,11 @@ class Master_controller(threading.Thread):
                     self.Last_direction_y = self.motor_2_direction
                     self.motor_2_direction = 0
                     time_2 = time.time()
-                print("motor.Stop_2, counter reached target, ", "hall_2_counter = ", self.hall_2_counter,
-                      ", hall_2_target = ", int(hall_2_target))
+                # print("Stop_2, counter reached target, ", "hall_2_counter = ", self.hall_2_counter, ", hall_2_target = ", int(hall_2_target))
+                print("Stop_2 ", "h2c=", self.hall_2_counter, " h2t=", int(hall_2_target))
 
             loop_count = loop_count + 1
-            print("loop count = ", loop_count, "loop time = ", time.time() - time_3)
+            print("loop count=", loop_count, " loop time=", time.time() - time_3)
 
     # 霍尔开关线程
     def hall_1_callback(self, channel1):
