@@ -61,8 +61,12 @@ class Master_controller(threading.Thread):
 
         time_1 = time.time()
         time_2 = time.time()
+        loop_count = 0
 
         while True:
+
+            time_3 = time.time()
+
             # print("entered Master_controller while loop")
             # print("In Master_controller, joystick_x_queue size is ", joystick_x_queue.qsize())
             # print("In Master_controller, joystick_y_queue size is ", joystick_y_queue.qsize())
@@ -138,6 +142,9 @@ class Master_controller(threading.Thread):
             #     print("in display loop, put x = ", temp_x, " put y = ", temp_y)
             #     Master_controller.myPut_size1(self, self.game_x_queue, temp_x)
             #     Master_controller.myPut_size1(self, self.game_y_queue, temp_y)
+
+            loop_count = loop_count + 1
+            print("loop count = ", loop_count, "loop time = ", time.time() - time_3)
 
 
     # 霍尔开关线程
