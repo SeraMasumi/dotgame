@@ -33,9 +33,9 @@ import RPi.GPIO as GPIO
 import time
 
 # Pin definition
-RST_PIN = 18
-CS_PIN = 22
-DRDY_PIN = 17
+RST_PIN = 12
+CS_PIN = 15
+DRDY_PIN = 11
 
 # SPI device, bus = 0, device = 0
 SPI = spidev.SpiDev(0, 0)
@@ -65,7 +65,7 @@ def spi_readbytes(reg):
 # return SPI.xfer(send_list)
 
 def module_init():
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
     GPIO.setwarnings(False)
     GPIO.setup(RST_PIN, GPIO.OUT)
     GPIO.setup(CS_PIN, GPIO.OUT)
