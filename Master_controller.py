@@ -71,8 +71,8 @@ class Master_controller(threading.Thread):
 
         while True:
 
-            #         jx, jy, h1t, h1c, h2t, h2c, m1, m2, time_enter, time_exit, loop_time
-            status = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            # 0:jx, 1:jy, 2:h1t, 3:h1c, 4:h2t, 5:h2c, 6:m1, 7:m2, 8:loop_time
+            status = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
             time_3 = time.time()
             '''
@@ -95,10 +95,10 @@ class Master_controller(threading.Thread):
             joystick_y = ads1256_controller.ADS1256_GetoneChannel(4)
             status[0] = joystick_x
             status[1] = joystick_y
-            self.hall_1_target = (joystick_x - JOYSTICK_X_MIN - JOYSTICK_X_MID) / (
-                        JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX
-            self.hall_2_target = (joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
-                        JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX
+            self.hall_1_target = int((joystick_x - JOYSTICK_X_MIN - JOYSTICK_X_MID) / (
+                        JOYSTICK_X_MAX - JOYSTICK_X_MIN) * HALL_1_MAX)
+            self.hall_2_target = int((joystick_y - JOYSTICK_Y_MIN - JOYSTICK_Y_MID) / (
+                        JOYSTICK_Y_MAX - JOYSTICK_Y_MIN) * HALL_2_MAX)
             status[2] = self.hall_1_target
             status[4] = self.hall_2_target
 
@@ -181,8 +181,8 @@ class Master_controller(threading.Thread):
                 self.time_2 = time.time()
                 status[7] = 8
 
-            status[8] = round(time_3, 5)
-            status[9] = round(time.time(), 5)
+            status[8] = round(time.time() - time_3, 5)
+            # status[9] = round(time.time(), 5)
             print(status)
 
     # 霍尔开关线程
