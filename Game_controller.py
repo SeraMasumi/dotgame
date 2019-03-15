@@ -25,7 +25,7 @@ class Game_controller(threading.Thread):
         # 初始化click_box的坐标和宽高
         start_game_click_box_x = 390
         start_game_click_box_y = 500
-        balanced_click_box_x = 300
+        balanced_click_box_x = 350
         balanced_click_box_y = 400
         click_box_w = 225
         click_box_h = 20
@@ -148,7 +148,7 @@ class Game_controller(threading.Thread):
 
             else:  # 请找平
                 screen.blit(finish_balance_string, (balanced_click_box_x, balanced_click_box_y))
-                screen.blit(find_balance_string, (395, 235))
+                screen.blit(find_balance_string, (270, 235))
 
             # 更新clock和刷新屏幕
             dt = clock.tick()
