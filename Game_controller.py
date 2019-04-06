@@ -10,12 +10,7 @@ import queue
 class Game_controller(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
-        self.input_x_queue = queue.Queue(1)
-        self.input_y_queue = queue.Queue(1)
-
-    # def display(self, x, y):
-    #     self.input_x = x  # 传来的动点
-    #     self.input_y = y
+        self.game_dot_queue = queue.Queue()
 
     def run(self):
 
@@ -30,13 +25,13 @@ class Game_controller(threading.Thread):
         # 初始化click_box的坐标和宽高
         start_game_click_box_x = 390
         start_game_click_box_y = 500
-        balanced_click_box_x = 300
+        balanced_click_box_x = 350
         balanced_click_box_y = 400
         click_box_w = 225
         click_box_h = 20
 
         # 初始化游戏状态
-        game_started = False
+        game_started = True # TODO: 测试用，之后改回去
         running = True
         tablet_balanced = False
 
@@ -86,8 +81,12 @@ class Game_controller(threading.Thread):
 
         dt = 0
 
-        master_controller = Master_controller.Master_controller(self.input_x_queue, self.input_y_queue)
+        master_controller = Master_controller.Master_controller(self.game_dot_queue)
         master_controller.start()
+
+        drawing_x = 0
+        drawing_y = 0
+
 
         # 游戏主循环
         while running:
@@ -121,23 +120,27 @@ class Game_controller(threading.Thread):
 
             if game_started:  # 游戏已经开始
                 # 画点
+                '''
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x1, pos_y1), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x2, pos_y2), 10, 0)
                 pygame.draw.circle(screen, (255, 255, 255), (pos_x3, pos_y3), 10, 0)
-                if (not self.input_x_queue.empty()) and (not self.input_y_queue.empty()):
-                    temp_x = self.input_x_queue.get()
-                    temp_y = self.input_y_queue.get()
-                    pygame.draw.circle(screen, (255, 255, 255), (temp_x, temp_y), 10, 0)
-                    print("draw point x = ", temp_x, ", y = ", temp_y)
+                '''
+                if not self.game_dot_queue.empty():
+                    temp_tuple = self.game_dot_queue.get()
+                    drawing_x = int(temp_tuple[0])
+                    drawing_y = int(temp_tuple[1])
+                    # print("drawing_x = ", drawing_x, ", drawing_y = ", drawing_y)
+                pygame.draw.circle(screen, (255, 255, 255), (drawing_x, drawing_y), 10, 0)
+                # print("draw point x = ", drawing_x, ", y = ", drawing_y)
 
             elif tablet_balanced:  # 游戏还没开始，显示欢迎界面
                 screen.blit(start_game_string, (start_game_click_box_x, start_game_click_box_y))
                 screen.blit(title_string, (395, 235))
                 screen.blit(hint_x1, (320, 300))
-                screen.blit(hint_y1, (320, 365))
-                screen.blit(hint_x2, (320, 430))
-                screen.blit(hint_y2, (520, 300))
-                screen.blit(hint_x3, (520, 365))
+                screen.blit(hint_y1, (520, 300))
+                screen.blit(hint_x2, (320, 365))
+                screen.blit(hint_y2, (520, 365))
+                screen.blit(hint_x3, (320, 430))
                 screen.blit(hint_y3, (520, 430))
                 # sloth lib 输入框的活动
                 manager.draw(screen)
@@ -145,7 +148,7 @@ class Game_controller(threading.Thread):
 
             else:  # 请找平
                 screen.blit(finish_balance_string, (balanced_click_box_x, balanced_click_box_y))
-                screen.blit(find_balance_string, (395, 235))
+                screen.blit(find_balance_string, (270, 235))
 
             # 更新clock和刷新屏幕
             dt = clock.tick()
